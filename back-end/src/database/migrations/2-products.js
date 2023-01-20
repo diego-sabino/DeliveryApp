@@ -1,6 +1,3 @@
-
-
-
 const urlDefault = 'https://bityli.com/XDCXy'
 
 module.exports = {
