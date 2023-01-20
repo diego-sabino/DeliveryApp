@@ -1,6 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
     const sales = sequelize.define('sales', {
-      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+      id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true, 
+          autoIncrement: true
+         },
       userId: {
         type: DataTypes.INTEGER,
          foreignKey: true
@@ -8,12 +12,21 @@ module.exports = (sequelize, DataTypes) => {
       sellerId: {
         type: DataTypes.INTEGER,
         foreignKey: true
-      },
-      totalPrice: { type: DataTypes.DECIMAL(9,2) },
-      deliveryAddress: { type: DataTypes.STRING },
-      deliveryNumber: { type: DataTypes.STRING },
-      status: { type: DataTypes.STRING },
-      saleDate: { type: DataTypes.DATE }
+        },
+      totalPrice: { 
+        type: DataTypes.DECIMAL(9,2)
+        },
+      deliveryAddress: { 
+        type: DataTypes.STRING
+        },
+      deliveryNumber: {
+         type: DataTypes.STRING 
+        },
+      status: { 
+        type: DataTypes.STRING 
+        },
+      saleDate: { 
+        type: DataTypes.DATE }
     },
     {
       tableName: 'sales', 
