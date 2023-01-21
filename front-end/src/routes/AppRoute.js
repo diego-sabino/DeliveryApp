@@ -10,10 +10,10 @@ function AppRoute() {
     <BrowserRouter>
       <AppProvider>
         <Routes>
-          <Route path="/login" element={ <Login /> } exact />
           <Route path="/" element={ <Navigate to="/login" /> } />
-          <Route path="/register" element={ <Register /> } exact />
           <Route path="/customer/products" element={ <CustomerProducts /> } exact />
+          <Route path="/login" element={ <Login /> } exact />
+          <Route path="/register" element={ <Register /> } exact />
         </Routes>
       </AppProvider>
     </BrowserRouter>

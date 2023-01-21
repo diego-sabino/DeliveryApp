@@ -4,9 +4,13 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [userData, setUserData] = useState();
+  const [cart, setCart] = useState([]);
   const value = React.useMemo(() => ({
-    userData, setUserData,
-  }), [userData]);
+    userData,
+    cart,
+    setUserData,
+    setCart,
+  }), [userData, cart]);
 
   return (
     <AppContext.Provider
