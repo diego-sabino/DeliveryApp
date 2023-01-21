@@ -4,14 +4,13 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [userData, setUserData] = useState();
-  const memoizedData = useMemo(
-    () => computeData(userData, setUserData),
-    [userData, setUserData],
-  );
+  const value = React.useMemo(() => ({
+    userData, setUserData,
+  }), [userData]);
 
   return (
     <AppContext.Provider
-      value={ memoizedData }
+      value={ value }
 
     >
       {children}
