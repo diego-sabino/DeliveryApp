@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const service = require('../services/UserService');
 
 const getUserById = async (req, res) => {
@@ -17,24 +18,24 @@ const getAllUsers = async (_req, res) => {
   return res.status(200).json(users.message);
 };
 
-// const createUser = async (req, res) => {
-//   const { displayName, email, image } = req.body;
+const createUser = async (req, res) => {
+  const { name, email, role } = req.body;
 
-//   const newUser = await service.createUser(req.body);
+  const newUser = await service.createUser(req.body);
   
-//   const secret = process.env.JWT_SECRET || 'suaSenhaSecreta';
-//   const jwtConfig = {
-//     expiresIn: '7d',
-//     algorithm: 'HS256',
-//   };
-//   const token = jwt.sign({ data: { displayName, email, image } }, secret, jwtConfig);
+  const secret = process.env.JWT_SECRET || 'secret_key';
+  const jwtConfig = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  };
+  const token = jwt.sign({ data: { name, email, role } }, secret, jwtConfig);
 
-//   if (newUser.type) {
-//     return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
-//   }
+  if (newUser.type) {
+    return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
+  }
 
-//   return res.status(201).json({ token });
-// };
+  return res.status(201).json({ token });
+};
 
 module.exports = {
   createUser,
