@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import CustomerProducts from '../screens/CustomerProducts';
 
 function AppRoute() {
   return (
@@ -11,6 +12,7 @@ function AppRoute() {
       <Routes>
         <Route path="/login" element={ <Login /> } exact />
         <Route path="/register" element={ <Register /> } exact />
+        <Route path="/customer/products" element={ <CustomerProducts /> } exact />
       </Routes>
       {/* </AppProvider> */}
     </BrowserRouter>

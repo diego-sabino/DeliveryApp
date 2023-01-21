@@ -1,19 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-const minCharacterPassword = 6;
+import { minCharacterPassword, emailRegex } from '../utils/LoginUtil';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disableBtn, setDisableBtn] = useState(true);
 
+  const validEmail = emailRegex.test(email);
+  const validPassword = password.length >= minCharacterPassword;
+
   const navigate = useNavigate();
 
   useEffect(() => {
 
   }, []);
+
+  useEffect(() => {
+    if (validEmail && validPassword) {
+      setDisableBtn(false);
+    } else {
+      setDisableBtn(true);
+    }
+  }, [email, password, validEmail, validPassword]);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -27,16 +36,11 @@ export default function Login() {
     default:
       break;
     }
-
-    if (emailRegex.test(email)
-        && password.length >= minCharacterPassword) {
-      setDisableBtn(false);
-    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/');
+    navigate('/customer/products');
   };
 
   return (
@@ -91,8 +95,9 @@ export default function Login() {
             className="w-[221px] h-[43px] text-white
             bg-[#00a3ffcc]
             focus:ring-4 focus:outline-none
-            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] uppercase
-            font-thin
+            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]uppercase
+            font-thin disabled:bg-gray-400
+            disabled:cursor-not-allowed
             focus:ring-primary-300 rounded-[15px] text-base
             px-5 py-2.5 text-center"
           >

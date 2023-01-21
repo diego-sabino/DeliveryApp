@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i;
-const minCharacterName = 12;
-const minCharacterPassword = 6;
+import { minCharacterPassword, emailRegex, minCharacterName } from '../utils/LoginUtil';
 
 export default function Register() {
   const [nameValue, setName] = useState('');
