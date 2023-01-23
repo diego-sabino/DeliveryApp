@@ -1,3 +1,10 @@
 export const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i;
 export const minCharacterPassword = 6;
 export const minCharacterName = 12;
+export const statusOk = 200;
+export const statusCreated = 201;
+export const statusBadRequest = 400;
+export const statusUnauthorized = 401;
+export const statusNotFound = 404;
+export const statusServerError = 500;
+export const timeOut = 4000;

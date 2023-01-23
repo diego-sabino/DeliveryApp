@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { minCharacterPassword, emailRegex } from '../utils/LoginUtil';
+import { statusOk, timeOut, minCharacterPassword, emailRegex } from '../utils/LoginUtil';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disableBtn, setDisableBtn] = useState(true);
+  const [authorized, setAuthorized] = useState(null);
 
   const validEmail = emailRegex.test(email);
   const validPassword = password.length >= minCharacterPassword;
@@ -40,7 +42,24 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/customer/products');
+    axios.post('http://localhost:3001/login', {
+      email,
+      password,
+    })
+      .then((response) => {
+        console.log(response.data);
+        if (response.status === statusOk) {
+          navigate('/customer/products');
+          setAuthorized(true);
+        }
+      })
+      .catch((error) => {
+        setAuthorized(false);
+        setTimeout(() => {
+          setAuthorized(null);
+        }, timeOut);
+        console.log(error.message);
+      });
   };
 
   return (
@@ -107,18 +126,20 @@ export default function Login() {
 
         <p className="text-sm text-center font-light text-gray-400">
           Don&apos;t have an account yet?
-          <a
-            href="/register"
+          <button
+            type="button"
+            onClick={ () => navigate('/register') }
             className="font-medium hover:underline text-[#00a3ffcc] ml-2"
-            data-testid="common_login__element-invalid-email"
+            data-testid="common_login__button-register"
           >
             Sign up
-          </a>
+          </button>
         </p>
       </form>
 
-      {/* {(authorization === null || authorization === true) ? null : (
+      {(authorized === null || authorized === true) ? null : (
         <div
+          data-testid="common_login__element-invalid-email"
           id="toast-bottom-right"
           className="flex absolute opc motion-reduce:transition-none
            motion-reduce:hover:transform-none right-5 bottom-5 items-center
@@ -143,7 +164,7 @@ export default function Login() {
           </div>
           <div className="ml-3 text-sm font-normal">Usuário e/ou senha inválido(s)</div>
         </div>
-      )} */}
+      )}
     </section>
   );
 }
