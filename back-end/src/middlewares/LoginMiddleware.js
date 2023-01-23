@@ -9,8 +9,6 @@ const regexEmail = (req, res, next) => {
 
 const isPasswordValid = async (req, res, next) => {
   const { password } = req.body;
-  console.log("nao existe", !password);
-  console.log("6", password.length < 6);
   if (!password || password.length < 6) {
     return res.status(400).json({ message: 'senha no formato incorreto' });
   }
