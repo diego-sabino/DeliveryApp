@@ -1,5 +1,5 @@
-const { User } = require('../database/models');
 const md5 = require('md5');
+const { User } = require('../database/models');
 
 const findUserById = async (id) => {
   const result = await User.findByPk(id);

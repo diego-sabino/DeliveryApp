@@ -10,6 +10,7 @@ router.post(
   UserMiddleware.validateName,
   UserMiddleware.validateEmail,
   UserMiddleware.validatePassword,
-  UserController.createUser);
+  UserController.createUser,
+);
 
 module.exports = router;
