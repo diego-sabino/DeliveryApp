@@ -1,4 +1,5 @@
 const { User } = require('../database/models');
+const md5 = require('md5');
 
 const findUserById = async (id) => {
   const result = await User.findByPk(id);
@@ -10,7 +11,17 @@ const findUserById = async (id) => {
   return result;
 };
 
-const findUser = async (email) => {
+const findUserByName = async (name) => {
+  const singleUser = await User.findOne({ where: { name } });
+
+  if (!singleUser) {
+    return { type: 'USER_NOT_FOUND', message: 'Invalid fields' };
+  }
+
+  return { type: null, message: singleUser };
+};
+
+const findUserByEmail = async (email) => {
   const singleUser = await User.findOne({ where: { email } });
 
   if (!singleUser) {
@@ -32,7 +43,11 @@ const findAllUsers = async () => {
 };
 
 const createUser = async (user) => {
-  const newUser = await User.create({ ...user });
+  const { name, email, role, password } = user;
+
+  const passwordHash = md5(password);
+
+  const newUser = await User.create({ name, email, role, password: passwordHash });
 
   if (!newUser) {
     return { type: 'CREATE_USER_FAIL', message: 'User already exists' };
@@ -42,7 +57,8 @@ const createUser = async (user) => {
 };
 
 module.exports = {
-  findUser,
+  findUserByName,
+  findUserByEmail,
   createUser,
   findAllUsers,
   findUserById,
