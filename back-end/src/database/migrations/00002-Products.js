@@ -1,6 +1,8 @@
+const urlDefault = 'https://bityli.com/XDCXy'
+
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable("users", {
+        await queryInterface.createTable("products", {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -11,16 +13,18 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
-            email: {
+            price: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.DECIMAL(4,2),
             },
-            role: {
+            urlImage: {
                 type: Sequelize.STRING,
+                field: 'url_image',
+                default: urlDefault
             },
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable("users");
+        await queryInterface.dropTable("products");
     },
 };
