@@ -4,8 +4,6 @@ const UserRoutes = require('../routes/UserRoutes');
 
 const app = express();
 
-// Testando dois!!
-
 app.use(express.json());
 
 app.get('/coffee', (_req, res) => res.status(418).end());
