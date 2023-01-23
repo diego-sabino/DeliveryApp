@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const service = require('../services/UserService');
+const errorMap = require('../utils/ErrorMap');
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
