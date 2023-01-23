@@ -1,13 +1,13 @@
 const express = require('express');
 const LoginController = require('../controllers/LoginController');
-const LoginMiddleware = require('../middlewares/LoginMiddleware');
+const UserMiddleware = require('../middlewares/UserMiddleware');
 
 const router = express.Router();
 
 router.post(
   '/login',
-  LoginMiddleware.regexEmail,
-  LoginMiddleware.isPasswordValid,
+  UserMiddleware.validateEmail,
+  UserMiddleware.validatePassword,
   LoginController.login,
 );
 

@@ -22,18 +22,25 @@ const getAllUsers = async (_req, res) => {
 const createUser = async (req, res) => {
   const { name, email, role } = req.body;
 
+  const userNameAlreadyExists = await service.findUserByName(name);
+  const userEmailAlreadyExists = await service.findUserByEmail(email);
+
+  if (userNameAlreadyExists || userEmailAlreadyExists) {
+    return res.status(400).json({ message: "User already exists" });
+  }
+
   const newUser = await service.createUser(req.body);
-  
+
+  if (newUser.type) {
+    return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
+  }
+
   const secret = process.env.JWT_SECRET || 'secret_key';
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
   const token = jwt.sign({ data: { name, email, role } }, secret, jwtConfig);
-
-  if (newUser.type) {
-    return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
-  }
 
   return res.status(201).json({ token });
 };
