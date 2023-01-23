@@ -4,6 +4,11 @@ const LoginMiddleware = require('../middlewares/LoginMiddleware');
 
 const router = express.Router();
 
-router.post('/login', LoginMiddleware.regexEmail, LoginMiddleware.isPasswordValid, LoginController.login);
+router.post(
+  '/login',
+  LoginMiddleware.regexEmail,
+  LoginMiddleware.isPasswordValid,
+  LoginController.login
+);
 
 module.exports = router;
