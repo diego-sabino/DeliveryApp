@@ -8,7 +8,7 @@ router.post(
   '/login',
   LoginMiddleware.regexEmail,
   LoginMiddleware.isPasswordValid,
-  LoginController.login
+  LoginController.login,
 );
 
 module.exports = router;
