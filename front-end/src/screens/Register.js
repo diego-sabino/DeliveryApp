@@ -42,6 +42,20 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate('/login');
+    // axios.post('http://localhost:3001/register', {
+    //   email: 'seu_email@exemplo.com',
+    //   password: 'sua_senha',
+    //   role: 'customer',
+    // })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     if (response.status === 200) {
+    //       navigate('/login');
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.message);
+    //   });
   };
 
   return (
