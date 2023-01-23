@@ -1,0 +1,12 @@
+version: "3"
+services:
+  deliverydb:
+    container_name: app-delivery
+    image: mysql:8.0.23
+    platform: linux/x86_64
+    restart: always
+    ports:
+      - 3306:3306
+      - 33060:33060
+    environment:
+      MYSQL_ROOT_PASSWORD: password
