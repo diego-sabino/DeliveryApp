@@ -1,6 +1,7 @@
 const express = require('express');
 const LoginRoutes = require('../routes/LoginRoutes');
 const UserRoutes = require('../routes/UserRoutes');
+const CustumerRoutes = require('../routes/CustumerRoutes');
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use((_req, res, next) => {
 
 app.use(LoginRoutes);
 app.use(UserRoutes);
+app.use(CustumerRoutes);
 
 module.exports = app;
