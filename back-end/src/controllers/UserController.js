@@ -42,7 +42,7 @@ const createUser = async (req, res) => {
   };
   const token = jwt.sign({ data: { name, email, role } }, secret, jwtConfig);
 
-  return res.status(201).json({ token });
+  return res.status(201).json({ name, email, role, token });
 };
 
 module.exports = {
