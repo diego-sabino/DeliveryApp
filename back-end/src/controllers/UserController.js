@@ -25,8 +25,8 @@ const createUser = async (req, res) => {
   const userNameAlreadyExists = await service.findUserByName(name);
   const userEmailAlreadyExists = await service.findUserByEmail(email);
 
-  if (userNameAlreadyExists || userEmailAlreadyExists) {
-    return res.status(400).json({ message: 'User already exists' });
+  if (userNameAlreadyExists.type === null || userEmailAlreadyExists.type === null) {
+    return res.status(409).json({ message: 'User not existing or fields entered incorrectly' });
   }
 
   const newUser = await service.createUser(req.body);
