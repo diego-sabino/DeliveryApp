@@ -12,7 +12,7 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
     const getCartFromLocalStorage = () => {
       const cartList = JSON.parse(localStorage.getItem('cart'));
 
-      if (cartList.length > 0) {
+      if (cartList) {
         const filtered = cartList.filter((item) => item.id === drink.id);
         if (filtered.length > 0) {
           setQuantity(filtered[0].quantity);

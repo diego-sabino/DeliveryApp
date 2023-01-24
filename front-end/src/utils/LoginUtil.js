@@ -8,3 +8,4 @@ export const statusUnauthorized = 401;
 export const statusNotFound = 404;
 export const statusServerError = 500;
 export const timeOut = 4000;
+export const conflict = 409;

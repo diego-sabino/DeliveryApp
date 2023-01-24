@@ -12,7 +12,7 @@ export default function CustomerProducts() {
     const getCartFromLocalStorage = () => {
       const cartList = JSON.parse(localStorage.getItem('cart'));
 
-      if (cartList.length > 0) {
+      if (cartList) {
         setCart(cartList);
       }
     };
@@ -55,28 +55,33 @@ export default function CustomerProducts() {
   return (
     <div>
       <Navbar />
+      <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div
+          className="mt-6 grid grid-cols-1
+          gap-y-10 gap-x-6 sm:grid-cols-2
+          lg:grid-cols-4 xl:gap-x-8"
+        >
+          {drinks.map((drink) => (
+            <DrinkCard
+              key={ drink.id }
+              drink={ drink }
+              handleClick={ () => handleClick(drink) }
+              handleRemove={ () => handleRemove(drink) }
+            />
+          ))}
+        </div>
 
-      <div>
-        {drinks.map((drink) => (
-          <DrinkCard
-            key={ drink.id }
-            drink={ drink }
-            handleClick={ () => handleClick(drink) }
-            handleRemove={ () => handleRemove(drink) }
-          />
-        ))}
-      </div>
-
-      <button
-        className="
+        <button
+          className="
           bg-blue-500 hover:bg-blue-700
           text-white font-bold py-2 px-4
           rounded absolute top-24 right-0"
-        type="button"
+          type="button"
         // onClick={ navigateToCheckout }
-      >
-        {`R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
-      </button>
+        >
+          {`R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
+        </button>
+      </div>
     </div>
 
   );

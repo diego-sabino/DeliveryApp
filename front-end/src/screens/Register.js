@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { minCharacterPassword, emailRegex, minCharacterName } from '../utils/LoginUtil';
+import axios from 'axios';
+
+import { minCharacterPassword,
+  emailRegex,
+  minCharacterName,
+  statusCreated,
+  timeOut } from '../utils/LoginUtil';
+import setItemLocalStorage from '../utils/LocaStorageUtil';
 
 export default function Register() {
   const [nameValue, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disableBtn, setDisableBtn] = useState(true);
+  const [authorization, setAuthorization] = useState(null);
 
   const navigate = useNavigate();
 
@@ -41,21 +49,26 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/login');
-    // axios.post('http://localhost:3001/register', {
-    //   email: 'seu_email@exemplo.com',
-    //   password: 'sua_senha',
-    //   role: 'customer',
-    // })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     if (response.status === 200) {
-    //       navigate('/login');
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.message);
-    //   });
+    axios.post('http://localhost:3001/register', {
+      email,
+      name: nameValue,
+      password,
+      role: 'customer',
+    })
+      .then((response) => {
+        if (response.status === statusCreated) {
+          setItemLocalStorage('user', response.data);
+          setAuthorization(true);
+          navigate('/customer/products');
+        }
+      })
+      .catch((error) => {
+        setAuthorization(false);
+        setTimeout(() => {
+          setAuthorization(null);
+        }, timeOut);
+        console.log(error.message);
+      });
   };
 
   return (
@@ -147,7 +160,7 @@ export default function Register() {
         </p>
       </form>
 
-      {/* {(authorization === null || authorization === true) ? null : (
+      {(authorization === null || authorization === true) ? null : (
         <div
           id="toast-bottom-right"
           className="flex absolute opc motion-reduce:transition-none
@@ -172,9 +185,9 @@ export default function Register() {
               />
             </svg>
           </div>
-          <div className="ml-3 text-sm font-normal">Usuário e/ou senha inválido(s)</div>
+          <div className="ml-3 text-sm font-normal">User already registred</div>
         </div>
-      )} */}
+      )}
     </section>
   );
 }
