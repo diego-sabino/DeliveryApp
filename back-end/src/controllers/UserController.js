@@ -35,6 +35,8 @@ const createUser = async (req, res) => {
     return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
   }
 
+  // Entrei!
+
   const secret = process.env.JWT_SECRET || 'secret_key';
   const jwtConfig = {
     expiresIn: '7d',
