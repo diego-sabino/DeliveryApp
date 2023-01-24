@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
   const userEmailAlreadyExists = await service.findUserByEmail(email);
 
   if (userNameAlreadyExists.type === null || userEmailAlreadyExists.type === null) {
-    return res.status(409).json({ message: 'User not existing or fields entered incorrectly' });
+    return res.status(409).json({ message: 'User dont exists or invalid fields' });
   }
 
   const newUser = await service.createUser(req.body);
@@ -35,6 +35,8 @@ const createUser = async (req, res) => {
     return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
   }
 
+  // Entrei!
+
   const secret = process.env.JWT_SECRET || 'secret_key';
   const jwtConfig = {
     expiresIn: '7d',
@@ -42,7 +44,7 @@ const createUser = async (req, res) => {
   };
   const token = jwt.sign({ data: { name, email, role } }, secret, jwtConfig);
 
-  return res.status(201).json({ token });
+  return res.status(201).json({ name, email, role, token });
 };
 
 module.exports = {
