@@ -7,9 +7,6 @@ const login = async (req, res) => {
   const user = await (await service.findUserByEmail(email)).message;
   const { name, role } = user;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Some required fields are missing' });
-  }
   if (!user) {
     return res.status(404).json({ message: 'Not found' });
   }
