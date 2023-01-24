@@ -6,13 +6,15 @@ import AppContext from '../context/AppContext';
 
 export default function DrinkCard({ drink, handleClick, handleRemove }) {
   const { cart } = useContext(AppContext);
+
   const [quantity, setQuantity] = useState(0);
+  const parseFloatPrice = parseFloat(drink.price).toFixed(2).replace('.', ',');
 
   useEffect(() => {
     const getCartFromLocalStorage = () => {
       const cartList = JSON.parse(localStorage.getItem('cart'));
 
-      if (cartList) {
+      if (cartList && cartList.length) {
         const filtered = cartList.filter((item) => item.id === drink.id);
         if (filtered.length > 0) {
           setQuantity(filtered[0].quantity);
@@ -24,13 +26,25 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
     getCartFromLocalStorage();
   }, [cart]);
 
+  const handleInputChange = (event) => {
+    setQuantity(event.target.value);
+    const cartList = JSON.parse(localStorage.getItem('cart'));
+    const updatedCart = cartList.map((item) => {
+      if (item.id === drink.id) {
+        item.quantity = event.target.value;
+      }
+      return item;
+    });
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
   return (
     <div className="flex flex-col w-fit items-center">
       <img
         data-testid={ `customer_products__img-card-bg-image-${drink.id}` }
         src={ drink.urlImage }
         alt={ drink.name }
-        className="w-56 h-60"
+        className="w-56 object-cover h-60"
       />
 
       <div className="flex flex-col bg-[#EAF1EF] px-10 py-4">
@@ -44,7 +58,7 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
           <p
             data-testid={ `customer_products__element-card-price-${drink.id}` }
           >
-            {drink.price.toFixed(2).replace('.', ',')}
+            {`R$ ${parseFloatPrice}`}
           </p>
 
         </div>
@@ -54,16 +68,24 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
             onClick={ () => handleClick(drink) }
             type="button"
             className="p-2 bg-[#036B52] rounded-l-lg text-white"
+            data-testid={ `customer_products__button-card-add-item-${drink.id}` }
           >
             <AiOutlinePlus />
           </button>
 
-          <p className="px-5 py-2 bg-white">{quantity}</p>
+          <input
+            data-testid={ `customer_products__input-card-quantity-${drink.id}` }
+            className="px-5 py-2 bg-white"
+            name="quantity"
+            value={ quantity }
+            onChange={ (event) => handleInputChange(event) }
+          />
 
           <button
             onClick={ () => handleRemove(drink) }
             type="button"
             className="p-2 bg-[#036B52] rounded-r-lg text-white"
+            data-testid={ `customer_products__button-card-rm-item-${drink.id}` }
           >
             <AiOutlineMinus />
           </button>
@@ -77,7 +99,7 @@ DrinkCard.propTypes = {
   drink: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    price: PropTypes.number,
+    price: PropTypes.string,
     urlImage: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,

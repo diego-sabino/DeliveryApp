@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { statusOk, timeOut, minCharacterPassword, emailRegex } from '../utils/LoginUtil';
+import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -13,10 +14,6 @@ export default function Login() {
   const validPassword = password.length >= minCharacterPassword;
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-
-  }, []);
 
   useEffect(() => {
     if (validEmail && validPassword) {
@@ -49,6 +46,7 @@ export default function Login() {
       .then((response) => {
         console.log(response.data);
         if (response.status === statusOk) {
+          setItemLocalStorage('user', response.data);
           navigate('/customer/products');
           setAuthorized(true);
         }

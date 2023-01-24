@@ -7,7 +7,7 @@ import { minCharacterPassword,
   minCharacterName,
   statusCreated,
   timeOut } from '../utils/LoginUtil';
-import setItemLocalStorage from '../utils/LocaStorageUtil';
+import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function Register() {
   const [nameValue, setName] = useState('');
