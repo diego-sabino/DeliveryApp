@@ -1,10 +1,11 @@
 const md5 = require('md5');
+const jwt = require('jsonwebtoken');
 const service = require('../services/UserService');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await (await service.findUserByEmail(email)).message;
-  const { role } = user;
+  const { name, role } = user;
 
   if (!email || !password) {
     return res.status(400).json({ message: 'Some required fields are missing' });
@@ -16,7 +17,14 @@ const login = async (req, res) => {
     return res.status(404).json({ message: 'Wrong password' });
   }
 
-  return res.status(200).json({ role });
+  const secret = process.env.JWT_SECRET || 'secret_key';
+  const jwtConfig = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  };
+  const token = jwt.sign({ data: { name, email, role } }, secret, jwtConfig);
+
+  return res.status(200).json({ role, token });
 };
 
 module.exports = {
