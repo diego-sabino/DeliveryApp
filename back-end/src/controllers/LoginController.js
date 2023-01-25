@@ -14,12 +14,12 @@ const login = async (req, res) => {
     return res.status(404).json({ message: 'Wrong password' });
   }
 
-  const secret = process.env.JWT_SECRET || 'secret_key';
+  const jwtKey = require('fs').readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ data: { name, email, role } }, secret, jwtConfig);
+  const token = jwt.sign({ data: { name, email, role } }, jwtKey, jwtConfig);
 
   return res.status(200).json({ name, email, role, token });
 };
