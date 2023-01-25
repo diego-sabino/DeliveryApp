@@ -1,5 +1,6 @@
 const express = require('express');
 const LoginRoutes = require('../routes/LoginRoutes');
+const SellerRoutes = require('../routes/SellerRoutes');
 const UserRoutes = require('../routes/UserRoutes');
 const CustumerRoutes = require('../routes/CustumerRoutes');
 const ImagesRoutes = require('../routes/ImagesRoutes');
@@ -19,6 +20,7 @@ app.use((_req, res, next) => {
 
 app.use(ImagesRoutes);
 app.use(LoginRoutes);
+app.use(SellerRoutes);
 app.use(UserRoutes);
 app.use(CustumerRoutes);
 
