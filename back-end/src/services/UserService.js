@@ -33,7 +33,7 @@ const findUserByEmail = async (email) => {
 
 const findAllUsers = async () => {
   const users = await user.findAll();
-  const usersHandler = users.map((user) => user.dataValues);
+  const usersHandler = users.map((e) => e.dataValues);
   usersHandler.forEach((elem) => {
     const element = elem;
     delete element.password;
