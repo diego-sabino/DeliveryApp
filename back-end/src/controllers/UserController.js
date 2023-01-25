@@ -3,6 +3,7 @@ const jwtKey = require('fs')
   .readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
 const service = require('../services/UserService');
 const errorMap = require('../utils/ErrorMap');
+
 const getUserById = async (req, res) => {
   const { id } = req.params;
   const user = await service.findUserById(id);
