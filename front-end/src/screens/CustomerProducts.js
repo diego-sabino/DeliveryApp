@@ -8,11 +8,10 @@ import DrinkCard from '../components/DrinkCard';
 import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function CustomerProducts() {
-  const { cart, setCart } = useContext(AppContext);
+  const { cart, setCart, totalPrice, setTotalPrice } = useContext(AppContext);
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [productsList, setProductsList] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   const minusOne = -1;
 
   const navigate = useNavigate();
@@ -118,6 +117,5 @@ export default function CustomerProducts() {
         </button>
       </div>
     </div>
-
   );
 }
