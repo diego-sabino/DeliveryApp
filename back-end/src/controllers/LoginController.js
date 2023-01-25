@@ -1,5 +1,6 @@
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 const service = require('../services/UserService');
 
 const login = async (req, res) => {
@@ -14,7 +15,7 @@ const login = async (req, res) => {
     return res.status(404).json({ message: 'Wrong password' });
   }
 
-  const jwtKey = require('fs').readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
+  const jwtKey = fs.readFileSync('jwt.evaluation.key', { encoding: 'utf-8' });
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
