@@ -10,6 +10,7 @@ import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 export default function CustomerProducts() {
   const { cart, setCart } = useContext(AppContext);
 
+  const [isDisabled, setIsDisabled] = useState(true);
   const [productsList, setProductsList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const minusOne = -1;
@@ -28,6 +29,7 @@ export default function CustomerProducts() {
     const fetchProducts = () => {
       axios.get('http://localhost:3001/customer/products')
         .then((response) => {
+          console.log(response.data);
           setProductsList(response.data);
         })
         .catch((error) => {
@@ -71,6 +73,11 @@ export default function CustomerProducts() {
   useEffect(() => {
     const totalPriceReduce = cart
       .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
+    if (totalPriceReduce > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
     setTotalPrice(totalPriceReduce);
   }, [cart]);
 
@@ -96,10 +103,11 @@ export default function CustomerProducts() {
           className="
           bg-blue-500 hover:bg-blue-700
           text-white font-bold py-2 px-4
-          rounded absolute top-24 right-0"
+          rounded top-24 right-0 fixed"
           type="button"
           onClick={ () => navigate('/customer/checkout') }
-          data-testid="customer_products__checkout-bottom-value"
+          data-testid="customer_products__button-cart"
+          disabled={ isDisabled }
         >
           <p
             data-testid="customer_products__checkout-bottom-value"

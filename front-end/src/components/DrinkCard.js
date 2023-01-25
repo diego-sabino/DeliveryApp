@@ -3,14 +3,15 @@ import { useContext, useEffect, useState } from 'react';
 
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import AppContext from '../context/AppContext';
+import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function DrinkCard({ drink, handleClick, handleRemove }) {
-  const { cart } = useContext(AppContext);
+  const { cart, setCart } = useContext(AppContext);
 
   const [quantity, setQuantity] = useState(0);
-  const parseFloatPrice = parseFloat(drink.price).toFixed(2).replace('.', ',');
 
-  // console.log(typeof quantity);
+  const minusOne = -1;
+  const parseFloatPrice = parseFloat(drink.price).toFixed(2).replace('.', ',');
 
   useEffect(() => {
     const getCartFromLocalStorage = () => {
@@ -31,21 +32,19 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
   }, [cart]);
 
   const handleInputChange = (event) => {
+    setQuantity(event.target.value);
     const num = parseFloat(event.target.value);
-    setQuantity(num);
-    const cartList = JSON.parse(localStorage.getItem('cart'));
-    const updatedCart = cartList.map((item) => {
-      if (item.id === drink.id) {
-        item.quantity = event.target.value;
-      } else if (item.quantity === 0) {
-        updatedCart.splice(index, 1);
-      } else {
-        item.quantity = 0;
-        setQuantity(0);
-      }
-      return item;
-    });
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    const newCart = [...cart];
+    const index = newCart.findIndex((item) => item.id === drink.id);
+    if (index !== minusOne) {
+      newCart[index].quantity = num;
+    } else {
+      console.log('tem nada aqui');
+      newCart.push({ ...drink, quantity: num });
+    }
+
+    setCart(newCart);
+    setItemLocalStorage('cart', newCart);
   };
 
   return (
