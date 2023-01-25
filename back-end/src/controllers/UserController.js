@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
   if (newUser.type) {
     return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
   }
-  // Entrei!
+  
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
