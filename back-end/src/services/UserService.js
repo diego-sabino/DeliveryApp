@@ -1,8 +1,8 @@
 const md5 = require('md5');
-const { User } = require('../database/models');
+const { user } = require('../database/models');
 
 const findUserById = async (id) => {
-  const result = await User.findByPk(id);
+  const result = await user.findByPk(id);
   
   if (result) {
     delete result.dataValues.password;
@@ -12,7 +12,7 @@ const findUserById = async (id) => {
 };
 
 const findUserByName = async (name) => {
-  const singleUser = await User.findOne({ where: { name } });
+  const singleUser = await user.findOne({ where: { name } });
 
   if (!singleUser) {
     return { type: 'USER_NOT_FOUND', message: 'Invalid fields' };
@@ -22,7 +22,7 @@ const findUserByName = async (name) => {
 };
 
 const findUserByEmail = async (email) => {
-  const singleUser = await User.findOne({ where: { email } });
+  const singleUser = await user.findOne({ where: { email } });
 
   if (!singleUser) {
     return { type: 'USER_NOT_FOUND', message: 'Invalid fields' };
@@ -32,7 +32,7 @@ const findUserByEmail = async (email) => {
 };
 
 const findAllUsers = async () => {
-  const users = await User.findAll();
+  const users = await user.findAll();
   const usersHandler = users.map((user) => user.dataValues);
   usersHandler.forEach((elem) => {
     const element = elem;
@@ -42,12 +42,12 @@ const findAllUsers = async () => {
   return { type: null, message: usersHandler };
 };
 
-const createUser = async (user) => {
-  const { name, email, role, password } = user;
+const createUser = async (teste) => {
+  const { name, email, role, password } = teste;
 
   const passwordHash = md5(password);
 
-  const newUser = await User.create({ name, email, role, password: passwordHash });
+  const newUser = await user.create({ name, email, role, password: passwordHash });
 
   if (!newUser) {
     return { type: 'CREATE_USER_FAIL', message: 'User already exists' };
