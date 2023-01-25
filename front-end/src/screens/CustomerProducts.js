@@ -28,7 +28,6 @@ export default function CustomerProducts() {
     const fetchProducts = () => {
       axios.get('http://localhost:3001/customer/products')
         .then((response) => {
-          console.log(response.data);
           setProductsList(response.data);
         })
         .catch((error) => {
