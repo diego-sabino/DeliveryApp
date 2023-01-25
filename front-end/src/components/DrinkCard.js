@@ -51,7 +51,7 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
     <div className="flex flex-col w-fit items-center">
       <img
         data-testid={ `customer_products__img-card-bg-image-${drink.id}` }
-        src={ drink.urlImage }
+        src={ drink.url_image }
         alt={ drink.name }
         className="w-56 object-cover h-60"
       />
@@ -109,7 +109,7 @@ DrinkCard.propTypes = {
     id: PropTypes.number,
     name: PropTypes.string,
     price: PropTypes.string,
-    urlImage: PropTypes.string,
+    url_image: PropTypes.string,
     quantity: PropTypes.number,
   }).isRequired,
   handleClick: PropTypes.func.isRequired,
