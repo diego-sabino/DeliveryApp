@@ -6,7 +6,6 @@ const CustumerRoutes = require('../routes/CustumerRoutes');
 const ImagesRoutes = require('../routes/ImagesRoutes');
 const salesProductsRouter = require('../routes/salesProducts');
 
-
 const app = express();
 
 app.use(express.json());

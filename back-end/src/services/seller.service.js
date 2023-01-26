@@ -19,6 +19,7 @@ const createSale = async (body) => {
     const saleData = await sale.create({
       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status,
     });
+    console.log(order);
     const prod = await body.order.map((product) => ({
       saleId: saleData.dataValues.id,
       productId: product.product_id,
