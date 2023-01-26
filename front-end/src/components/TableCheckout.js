@@ -94,7 +94,7 @@ export default function TableCheckout({ orderData }) {
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
               data-testid={
-                `customer_${testIdRoute}_element-order-table-unit-price-${index}`
+                `customer_${testIdRoute}__element-order-table-unit-price-${index}`
               }
             >
               {item.price.replace('.', ',')}

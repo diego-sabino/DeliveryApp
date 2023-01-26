@@ -19,7 +19,6 @@ function AppRoute() {
           <Route path="/customer/checkout" element={ <CustomerCheckout /> } exact />
           <Route path="/customer/products" element={ <CustomerProducts /> } exact />
           <Route path="/customer/orders/:id" element={ <OrderDetails /> } exact />
-          {/* <Route path="/customer/orders/:id" element={ <CustomerProducts /> } exact /> */}
           <Route path="/login" element={ <Login /> } exact />
           <Route path="/register" element={ <Register /> } exact />
         </Routes>

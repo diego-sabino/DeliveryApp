@@ -23,19 +23,17 @@ export default function NewUserForm() {
   const validPassword = password.length >= minCharacterPassword;
 
   useEffect(() => {
-    setSRoleSelected(roles[0]);
-
     const user = getItemLocalStorage('user');
     setToken(user.token);
   }, []);
 
   useEffect(() => {
-    if (validName && validEmail && validPassword) {
+    if (validName && validEmail && validPassword && roleSelected) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [email, fullname, password]);
+  }, [email, fullname, password, roleSelected]);
 
   const handleChange = ({ target }) => {
     const { id, value } = target;
@@ -74,7 +72,7 @@ export default function NewUserForm() {
           setFullname('');
           setEmail('');
           setPassword('');
-          setSelectedSeller(roles[0]);
+          setSelectedSeller('');
         }
         setAuthorization(false);
         setTimeout(() => {
@@ -84,7 +82,7 @@ export default function NewUserForm() {
         setFullname('');
         setEmail('');
         setPassword('');
-        setSelectedSeller(roles[0]);
+        setSelectedSeller('');
       })
       .catch((error) => {
         setAuthorization(false);
@@ -156,11 +154,18 @@ export default function NewUserForm() {
         <select
           type="text"
           id="role-manage"
-          value={ roleSelected }
           onChange={ handleSelect }
           data-testid="admin_manage__select-role"
           className="border-2 rounded p-2 w-[150px]"
+          required
         >
+          <option
+            disabled
+            defaultValue
+            selected
+          >
+            Select a role
+          </option>
           {
             roles.map((role, index) => (
               <option

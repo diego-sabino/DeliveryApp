@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import AppContext from '../context/AppContext';
 import Navbar from '../components/Navbar';
@@ -11,12 +11,12 @@ export default function OrderDetails() {
   const { cart } = useContext(AppContext);
 
   const [orderData, setOrderData] = useState([]);
-  const [sellers, setSellers] = useState([]);
-  const [selectedSeller, setSelectedSeller] = useState('');
-  const [address, setAddress] = useState('');
-  const [number, setNumber] = useState();
+  // const [sellers, setSellers] = useState([]);
+  // const [selectedSeller, setSelectedSeller] = useState('');
+  // const [address, setAddress] = useState('');
+  // const [number, setNumber] = useState();
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const cartList = getItemLocalStorage('cart');
@@ -36,19 +36,18 @@ export default function OrderDetails() {
     fetchSallers();
   }, [cart]);
 
-  const handleSubmit = () => {
-    axios.post('http://localhost:3001/orders', {
-      seller: selectedSeller,
-      address,
-      number,
-      orderData,
-    }).then((response) => {
-      console.log(response);
-      navigate(`/customer/orders/${response.data.id}}`);
-    }).catch((error) => {
-      console.log(error);
-    });
-  };
+  // const handleSubmit = () => {
+  //   axios.post('http://localhost:3001/orders', {
+  //     seller: selectedSeller,
+  //     address,
+  //     number,
+  //     orderData,
+  //   }).then((response) => {
+  //     navigate(`/customer/orders/${response.data.id}`);
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   });
+  // };
 
   useEffect(() => {
     axios.get('http://localhost:3001/salesProducts/1')

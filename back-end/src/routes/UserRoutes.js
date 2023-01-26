@@ -2,6 +2,7 @@ const express = require('express');
 const UserController = require('../controllers/UserController');
 const UserMiddleware = require('../middlewares/UserMiddleware');
 const TokenMiddleware = require('../middlewares/TokenMiddleware');
+
 const router = express.Router();
 
 router.get('/users', UserController.getAllUsers);
