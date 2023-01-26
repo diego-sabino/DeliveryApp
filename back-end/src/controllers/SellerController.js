@@ -5,11 +5,11 @@ const getSeller = async (req, res) => {
   return res.status(200).json(seller);
 };
 
-/* const createSale = async (req, res) => {
+ const createSale = async (req, res) => {
   const { body } = req;
   const sale = await service.createSale(body);
   return res.status(201).json(sale);
-}; */
+};
 
 const getSales = async (req, res) => {
   const sales = await service.getSales();
@@ -43,7 +43,7 @@ const updateSaleStatus = async (req, res) => {
 
 module.exports = {
   getSeller,
-/*   createSale, */
+  createSale,
   getSalesById,
   getSales,
   getSalesBySellerId,

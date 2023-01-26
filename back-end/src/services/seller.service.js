@@ -1,8 +1,8 @@
 const {
   user,
   sale,
-/*   salesProducts,
-  sequelize, */
+  salesProducts,
+  sequelize,  
   products,
 } = require('../database/models');
 
@@ -10,7 +10,7 @@ const getSeller = async () => {
   const sellerData = await user.findAll({ where: { role: 'seller' } });
   return sellerData;
 };
-/* 
+
 const createSale = async (body) => {
   const {
     userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status, order,
@@ -19,16 +19,16 @@ const createSale = async (body) => {
     const saleData = await sale.create({
       userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status,
     });
-    const prod = await body.map((product) => ({
+    const prod = await body.order.map((product) => ({
       saleId: saleData.dataValues.id,
-      productId: product.id,
+      productId: product.product_id,
       quantity: product.quantity,
     }));
     await salesProducts.bulkCreate(prod, { transaction });
     return saleData;
   });
   return result;
-}; */
+};
 
 const getSales = async () => {
   const sales = await sale.findAll();
@@ -73,7 +73,7 @@ const updateSaleStatus = async (id, status) => {
 module.exports = {
   getSalesById,
   getSeller,
-/*   createSale, */
+  createSale,
   getSales,
   getSellerById,
   updateSaleStatus,
