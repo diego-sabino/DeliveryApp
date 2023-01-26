@@ -1,7 +1,7 @@
 const express = require('express');
 const UserController = require('../controllers/UserController');
 const UserMiddleware = require('../middlewares/UserMiddleware');
-const validateToken = require('../middlewares/validateToken');
+const TokenMiddleware = require('../middlewares/TokenMiddleware');
 const router = express.Router();
 
 router.get('/users', UserController.getAllUsers);
@@ -15,7 +15,7 @@ router.post(
 
 router.post(
   '/admin/register',
-  validateToken.validateAdmin,
+  TokenMiddleware.validateAdmin,
   UserMiddleware.validateName,
   UserMiddleware.validateEmail,
   UserMiddleware.validatePassword,
