@@ -1,4 +1,4 @@
-const tableProprieties = [
+export const tableProprietiesCheckout = [
   'Item',
   'Description',
   'Quantity',
@@ -7,4 +7,10 @@ const tableProprieties = [
   'Remove Item',
 ];
 
-export default tableProprieties;
+export const tableProprietiesOrder = [
+  'Item',
+  'Description',
+  'Quantity',
+  'Value',
+  'Subtotal',
+];

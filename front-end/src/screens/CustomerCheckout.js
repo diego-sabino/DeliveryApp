@@ -15,6 +15,7 @@ export default function CustomerCheckout() {
   const [selectedSeller, setSelectedSeller] = useState('');
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState();
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const navigate = useNavigate();
 
@@ -54,19 +55,40 @@ export default function CustomerCheckout() {
     setSelectedSeller(event.target.value);
   };
 
-  const handleSubmit = () => {
-    axios.post('http://localhost:3001/orders', {
-      seller: selectedSeller,
-      address,
-      number,
-      orderData,
-    }).then((response) => {
-      console.log(response);
-      navigate(`/customer/orders/${response.data.id}}`);
-    }).catch((error) => {
-      console.log(error);
-    });
+  const userData = getItemLocalStorage('user');
+
+  console.log(userData);
+
+  const order = orderData
+    .map((product) => ({ productId: product.id, quantity: product.quantity }));
+
+  const postData = {
+    userId: 1,
+    sellerId: 2,
+    totalPrice,
+    deliveryAddress: address,
+    deliveryNumber: number,
+    status: 'pending',
+    order,
   };
+
+  const handleSubmit = (e) => {
+    // navigate('/customer/orders/1');
+    e.preventDefault();
+    axios.post('http://localhost:3001/sales', postData)
+      .then((response) => {
+        console.log(response);
+      // navigate(`/customer/orders/${response.data.id}}`);
+      }).catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    const totalPriceReduce = cart
+      .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
+    setTotalPrice(totalPriceReduce);
+  }, [cart]);
 
   return (
     <div>

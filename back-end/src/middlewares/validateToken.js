@@ -21,6 +21,7 @@ const validateAdmin = (req, res, next) => {
         message: 'você não tem permissão para cadastrar novos usuários',
       });
     }
+    console.log('token de adm bacana')
     next();
   } catch (error) {
     return res.status(401).json({ message: 'jwt malformed' });

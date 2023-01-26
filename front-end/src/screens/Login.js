@@ -37,6 +37,16 @@ export default function Login() {
     }
   };
 
+  const handleNavigate = (role) => {
+    if (role === 'administrator') {
+      navigate('/admin/manage');
+    } else if (role === 'seller') {
+      navigate('/seller/orders');
+    } else {
+      navigate('/customer/products');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:3001/login', {
@@ -47,8 +57,8 @@ export default function Login() {
         console.log(response.data);
         if (response.status === statusOk) {
           setItemLocalStorage('user', response.data);
-          navigate('/customer/products');
           setAuthorized(true);
+          handleNavigate(response.data.role);
         }
       })
       .catch((error) => {
