@@ -61,6 +61,14 @@ export default function CustomerCheckout() {
     }
   };
 
+  function Reset() {
+    setAddress('');
+    setNumber('');
+    setSelectedSeller('');
+    const dropDown = document.getElementById('select-checkout');
+    dropDown.selectedIndex = 0;
+  }
+
   const handleSelect = (event) => {
     setSelectedSeller(event.target.value);
   };
@@ -73,11 +81,11 @@ export default function CustomerCheckout() {
 
     const postData = {
       userId: userData.id,
-      sellerId: (sellers.find((seller) => seller.name === selectedSeller).id),
+      sellerId: selectedSeller,
       totalPrice,
       deliveryAddress: address,
       deliveryNumber: number,
-      status: 'pending',
+      status: 'Pendente',
       order,
     };
 
@@ -89,12 +97,14 @@ export default function CustomerCheckout() {
     })
       .then((response) => {
         if (response.status === statusCreated) {
-          navigate(`/customer/orders/${response.data.id}`);
           localStorage.removeItem('cart');
           setCart([]);
+          Reset();
+          navigate(`/customer/orders/${response.data.id}`);
         }
       }).catch((error) => {
         console.log(error);
+        Reset();
       });
   };
 
@@ -118,23 +128,24 @@ export default function CustomerCheckout() {
           className="flex flex-wrap border-2 border-gray-300 p-4 gap-3"
         >
           <label
-            htmlFor="seller-checkout"
+            htmlFor="select-checkout"
             className="flex flex-col"
           >
             Seller
             <select
               name="cars"
-              id="seller-checkout"
+              id="select-checkout"
               className="border-2 border-slate-400 p-2 rounded"
               onChange={ handleSelect }
               data-testid="customer_checkout__select-seller"
+              required
             >
               {
                 sellers.map((seller, index) => (
                   <option
                     key={ index }
                     name="selectedSeller"
-                    value={ seller.name }
+                    value={ seller.id }
                   >
                     {seller.name}
 

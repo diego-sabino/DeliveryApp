@@ -27,13 +27,15 @@ const createUser = async (req, res) => {
   if (newUser.type) {
     return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
   }
+
+  const { id } = newUser.message;
   
   const jwtConfig = {
     expiresIn: '7d',
     algorithm: 'HS256',
   };
   const token = jwt.sign({ data: { name, email, role } }, jwtKey, jwtConfig);
-  return res.status(201).json({ name, email, role, token });
+  return res.status(201).json({ id, name, email, role, token });
 };
 module.exports = {
   createUser,
