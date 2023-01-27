@@ -28,7 +28,7 @@ const createUser = async (req, res) => {
     return res.status(errorMap.mapError(newUser.type)).json(newUser.message);
   }
 
-  const {id} = newUser.message;
+  const { id } = newUser.message;
   
   const jwtConfig = {
     expiresIn: '7d',
