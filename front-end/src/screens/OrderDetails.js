@@ -1,6 +1,6 @@
-// import { useContext, useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 // import AppContext from '../context/AppContext';
 import Navbar from '../components/Navbar';

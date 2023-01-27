@@ -8,6 +8,7 @@ import CustomerCheckout from '../screens/CustomerCheckout';
 import CustomerOrders from '../screens/CustomerOrders';
 import AdminManager from '../screens/AdminManager';
 import OrderDetails from '../screens/OrderDetails';
+import SellerOrders from '../screens/SellerOrders';
 
 function AppRoute() {
   return (
@@ -22,6 +23,7 @@ function AppRoute() {
           <Route path="/customer/orders/:id" element={ <OrderDetails /> } exact />
           <Route path="/login" element={ <Login /> } exact />
           <Route path="/register" element={ <Register /> } exact />
+          <Route path="/seller/orders" element={ <SellerOrders /> } exact />
         </Routes>
       </AppProvider>
     </BrowserRouter>
