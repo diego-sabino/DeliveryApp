@@ -21,6 +21,7 @@ export default function NewUserForm() {
   const validName = fullname.length >= minCharacterName;
   const validEmail = emailRegex.test(email);
   const validPassword = password.length >= minCharacterPassword;
+  const validRole = roleSelected.length !== 0;
 
   useEffect(() => {
     const user = getItemLocalStorage('user');
@@ -28,7 +29,7 @@ export default function NewUserForm() {
   }, []);
 
   useEffect(() => {
-    if (validName && validEmail && validPassword && roleSelected) {
+    if (validName && validEmail && validPassword && validRole) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -52,6 +53,15 @@ export default function NewUserForm() {
     }
   };
 
+  function Reset() {
+    setFullname('');
+    setEmail('');
+    setPassword('');
+    setSRoleSelected('');
+    const dropDown = document.getElementById('role-manage');
+    dropDown.selectedIndex = 0;
+  }
+
   const handleSelect = (event) => {
     setSRoleSelected(event.target.value);
   };
@@ -69,23 +79,12 @@ export default function NewUserForm() {
       .then((response) => {
         if (response.status === statusCreated) {
           setAuthorization(true);
-          setFullname('');
-          setEmail('');
-          setPassword('');
-          setSelectedSeller('');
+          Reset();
         }
-        setAuthorization(false);
-        setTimeout(() => {
-          setAuthorization(null);
-        }, timeOut);
-        console.log(error.message);
-        setFullname('');
-        setEmail('');
-        setPassword('');
-        setSelectedSeller('');
       })
       .catch((error) => {
         setAuthorization(false);
+        Reset();
         setTimeout(() => {
           setAuthorization(null);
         }, timeOut);
@@ -163,6 +162,7 @@ export default function NewUserForm() {
             disabled
             defaultValue
             selected
+            value="Select a role"
           >
             Select a role
           </option>
@@ -171,7 +171,7 @@ export default function NewUserForm() {
               <option
                 key={ index }
                 id="roleSelected"
-                value={ roleSelected }
+                value={ role }
               >
                 {role}
               </option>
