@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+// import { useContext, useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { useParams } from 'react-router-dom';
 
-import AppContext from '../context/AppContext';
+// import AppContext from '../context/AppContext';
 import Navbar from '../components/Navbar';
 import TableCheckout from '../components/TableCheckout';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function OrderDetails() {
-  const { cart } = useContext(AppContext);
+  // const { cart } = useContext(AppContext);
 
   const [orderData, setOrderData] = useState([]);
   // const [sellers, setSellers] = useState([]);
