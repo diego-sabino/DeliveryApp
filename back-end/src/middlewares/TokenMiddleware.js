@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
-const jwtKey = require('fs')
-  .readFileSync('./jwt.evaluation.key', { encoding: 'utf-8' });
+const fs = require('fs');
+
+const jwtKey = fs.readFileSync('./jwt.evaluation.key', { encoding: 'utf-8' });
 
 const validateToken = async (req, res, next) => {
   const { authorization } = req.headers;
   jwt.verify(authorization, jwtKey, (err, _decoded) => {
     if (err) {
-      return res.status(401).json({ message: 'jwt malformed' });
+      return res.status(401).json({ message: 'Invalid Token' });
     }
   });
   next();
@@ -15,15 +16,15 @@ const validateToken = async (req, res, next) => {
 const validateAdmin = (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    const { role } = jwt.verify(authorization, jwtKey);
+    const { data: { role } } = jwt.decode(authorization, jwtKey);
     if (!role || role !== 'administrator') {
       return res.status(401).json({
-        message: 'você não tem permissão para cadastrar novos usuários',
+        message: 'You dont have this permission',
       });
     }
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'jwt malformed' });
+    return res.status(401).json({ message: 'Invalid Token' });
   }
 };
 

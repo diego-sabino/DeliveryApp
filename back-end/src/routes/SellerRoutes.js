@@ -1,12 +1,12 @@
 const express = require('express');
 const sellerController = require('../controllers/SellerController');
-/* const isValidToken = require('../middlewares/validateToken'); */
+const TokenMiddleware = require('../middlewares/TokenMiddleware');
 
 const router = express.Router();
 
 router
   .get('/seller', sellerController.getSeller)
-  .post('/sales', /* isValidToken.validateAdmin, */ sellerController.createSale) 
+  .post('/sales', TokenMiddleware.validateToken, sellerController.createSale)
   .get('/sales', sellerController.getSales)
   .get('/sales/:id', sellerController.getSalesById)
   .get('/seller/:id', sellerController.getSalesBySellerId)

@@ -6,7 +6,7 @@ const service = require('../services/UserService');
 const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await (await service.findUserByEmail(email)).message;
-  const { name, role } = user;
+  const { name, role, id } = user;
 
   if (!user) {
     return res.status(404).json({ message: 'Not found' });
@@ -22,7 +22,7 @@ const login = async (req, res) => {
   };
   const token = jwt.sign({ data: { name, email, role } }, jwtKey, jwtConfig);
 
-  return res.status(200).json({ name, email, role, token });
+  return res.status(200).json({ id, name, email, role, token });
 };
 
 module.exports = {

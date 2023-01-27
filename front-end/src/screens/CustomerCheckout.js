@@ -6,15 +6,18 @@ import AppContext from '../context/AppContext';
 import Navbar from '../components/Navbar';
 import TableCheckout from '../components/TableCheckout';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
+import { statusCreated } from '../utils/LoginUtil';
 
 export default function CustomerCheckout() {
-  const { cart } = useContext(AppContext);
+  const { cart, setCart } = useContext(AppContext);
 
   const [orderData, setOrderData] = useState([]);
   const [sellers, setSellers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState('');
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState();
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const navigate = useNavigate();
 
@@ -36,6 +39,14 @@ export default function CustomerCheckout() {
     fetchSallers();
   }, [cart]);
 
+  useEffect(() => {
+    if (address && number && selectedSeller && cart.length > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [address, number, selectedSeller, cart]);
+
   const handleChange = ({ target }) => {
     const { name, value } = target;
     switch (name) {
@@ -54,19 +65,44 @@ export default function CustomerCheckout() {
     setSelectedSeller(event.target.value);
   };
 
-  const handleSubmit = () => {
-    axios.post('http://localhost:3001/orders', {
-      seller: selectedSeller,
-      address,
-      number,
-      orderData,
-    }).then((response) => {
-      console.log(response);
-      navigate(`/customer/orders/${response.data.id}}`);
-    }).catch((error) => {
-      console.log(error);
-    });
+  const userData = getItemLocalStorage('user');
+
+  const handleSubmit = (e) => {
+    const order = orderData
+      .map((product) => ({ product_id: product.id, quantity: product.quantity }));
+
+    const postData = {
+      userId: userData.id,
+      sellerId: (sellers.find((seller) => seller.name === selectedSeller).id),
+      totalPrice,
+      deliveryAddress: address,
+      deliveryNumber: number,
+      status: 'pending',
+      order,
+    };
+
+    e.preventDefault();
+    axios.post('http://localhost:3001/sales', postData, {
+      headers: {
+        Authorization: userData.token,
+      },
+    })
+      .then((response) => {
+        if (response.status === statusCreated) {
+          navigate(`/customer/orders/${response.data.id}`);
+          localStorage.removeItem('cart');
+          setCart([]);
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
   };
+
+  useEffect(() => {
+    const totalPriceReduce = cart
+      .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
+    setTotalPrice(totalPriceReduce);
+  }, [cart]);
 
   return (
     <div>
@@ -122,6 +158,7 @@ export default function CustomerCheckout() {
               onChange={ handleChange }
               placeholder="Ex: Travessa Terceira da Castanheira, Bairro Muruci"
               className="border-2 border-slate-400 rounded p-2"
+              required
             />
           </label>
 
@@ -139,13 +176,15 @@ export default function CustomerCheckout() {
               onChange={ handleChange }
               placeholder="Ex: 193"
               className="border-2 border-slate-400 rounded p-2"
+              required
             />
           </label>
 
           <button
             type="submit"
-            className="text-white bg-[#036B52] w-40 rounded uppercase"
+            className="text-white bg-[#036B52] w-40 rounded uppercase disabled:opacity-50"
             data-testid="customer_checkout__button-submit-order"
+            disabled={ isDisabled }
           >
             finalize order
           </button>
