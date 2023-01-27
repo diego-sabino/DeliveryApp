@@ -67,7 +67,7 @@ export default function OrderDetails() {
 
         </p>
         <p
-          date-testid="customer_order_details__element-order-details-label-seller-name"
+          data-testid="customer_order_details__element-order-details-label-seller-name"
         >
           {`Vendedor ${sallerData.name}` }
         </p>
