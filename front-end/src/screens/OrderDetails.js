@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import AppContext from '../context/AppContext';
 import Navbar from '../components/Navbar';
@@ -16,17 +16,18 @@ export default function OrderDetails() {
   // const [address, setAddress] = useState('');
   // const [number, setNumber] = useState();
 
-  // const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
 
   useEffect(() => {
     const cartList = getItemLocalStorage('cart');
     setOrderData(cartList);
 
     const fetchSallers = () => {
-      axios.get('http://localhost:3001/seller')
+      axios.get(`http://localhost:3001/sales/${id}`)
         .then((response) => {
-          setSellers(response.data);
-          setSelectedSeller(response.data[0].name);
+          console.log(response.data);
+          setOrderData(response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -34,7 +35,7 @@ export default function OrderDetails() {
     };
 
     fetchSallers();
-  }, [cart]);
+  }, []);
 
   // const handleSubmit = () => {
   //   axios.post('http://localhost:3001/orders', {
@@ -49,14 +50,14 @@ export default function OrderDetails() {
   //   });
   // };
 
-  useEffect(() => {
-    axios.get('http://localhost:3001/salesProducts/1')
-      .then((response) => {
-        console.log(response);
-      }).catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('http://localhost:3001/salesProducts/1')
+  //     .then((response) => {
+  //       console.log(response);
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
   return (
     <div>
@@ -64,8 +65,12 @@ export default function OrderDetails() {
 
       <main className="p-4">
         <p className="text-lg font-bold ">Order details</p>
-        <p> </p>
-        <TableCheckout orderData={ orderData } />
+
+        {
+          orderData
+            ? <TableCheckout orderData={ orderData } />
+            : <p>Something went wrong</p>
+        }
 
       </main>
     </div>

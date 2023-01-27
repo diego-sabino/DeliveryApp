@@ -29,7 +29,7 @@ export default function CustomerCheckout() {
       axios.get('http://localhost:3001/seller')
         .then((response) => {
           setSellers(response.data);
-          setSelectedSeller(response.data[0].name);
+          setSelectedSeller(response.data[0].id);
         })
         .catch((error) => {
           console.log(error);
@@ -64,7 +64,7 @@ export default function CustomerCheckout() {
   function Reset() {
     setAddress('');
     setNumber('');
-    setSelectedSeller('');
+    setSelectedSeller(sellers[0].id);
     const dropDown = document.getElementById('select-checkout');
     dropDown.selectedIndex = 0;
   }

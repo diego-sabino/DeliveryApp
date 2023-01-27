@@ -11,6 +11,8 @@ export default function TableCheckout({ orderData }) {
 
   const customerCheckout = window.location.pathname === '/customer/checkout';
 
+  console.log(orderData);
+
   const removeItem = (id) => {
     const newOrderData = orderData.filter((item) => item.id !== id);
     localStorage.setItem('cart', JSON.stringify(newOrderData));
@@ -97,8 +99,8 @@ export default function TableCheckout({ orderData }) {
                 `customer_${testIdRoute}__element-order-table-unit-price-${index}`
               }
             >
-              {item.price.replace('.', ',')}
-
+              {(item.price)
+                ? item.price.replace('.', ',') : item.totalPrice.replace('.', ',') }
             </td>
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
