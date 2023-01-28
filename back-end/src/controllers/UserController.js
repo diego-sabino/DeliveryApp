@@ -16,6 +16,17 @@ const getAllUsers = async (_req, res) => {
   const users = await service.findAllUsers();
   return res.status(200).json(users.message);
 };
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const result = await service.deleteUser(id);
+  if (!result) {
+    return res.status(500).json({ message: 'Processo nao concluido, algo deu errado' });
+  }
+  return res.status(200).json({
+    message: 'Usuário removido com sucesso.',
+  });
+};
+ 
 const createUser = async (req, res) => {
   const { name, email, role } = req.body;
   const userNameAlreadyExists = await service.findUserByName(name);
@@ -40,5 +51,6 @@ const createUser = async (req, res) => {
 module.exports = {
   createUser,
   getAllUsers,
+  deleteUser,
   getUserById,
 };
