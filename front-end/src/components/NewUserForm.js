@@ -1,15 +1,18 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import roles from '../mocks/Roles';
+import { useContext, useEffect, useState } from 'react';
+import AppContext from '../context/AppContext';
 
 import { minCharacterPassword,
   emailRegex,
   minCharacterName,
   statusCreated,
   timeOut } from '../utils/LoginUtil';
+import roles from '../mocks/Roles';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function NewUserForm() {
+  const { toggle, setToggle } = useContext(AppContext);
+
   const [roleSelected, setSRoleSelected] = useState('');
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
@@ -78,6 +81,7 @@ export default function NewUserForm() {
     })
       .then((response) => {
         if (response.status === statusCreated) {
+          setToggle(!toggle);
           setAuthorization(true);
           Reset();
         }

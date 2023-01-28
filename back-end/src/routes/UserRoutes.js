@@ -22,6 +22,6 @@ router.post(
   UserMiddleware.validatePassword,
   UserController.createUser,
 );
-router.delete('/admin/manage/delete/:id', TokenMiddleware.validateAdmin, UserController.deleteUser);
+router.delete('/user/:id', TokenMiddleware.validateAdmin, UserController.deleteUser);
 
 module.exports = router;
