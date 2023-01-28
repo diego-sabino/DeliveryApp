@@ -41,6 +41,10 @@ const findAllUsers = async () => {
 
   return { type: null, message: usersHandler };
 };
+const deleteUser = async (id) => {
+  const response = await user.destroy({ where: { id } });
+  return response;
+};
 
 const createUser = async (teste) => {
   const { name, email, role, password } = teste;
@@ -62,4 +66,5 @@ module.exports = {
   createUser,
   findAllUsers,
   findUserById,
+  deleteUser,
 };
