@@ -114,6 +114,8 @@ export default function CustomerCheckout() {
     setTotalPrice(totalPriceReduce);
   }, [cart]);
 
+  console.log(orderData);
+
   return (
     <div>
       <Navbar />

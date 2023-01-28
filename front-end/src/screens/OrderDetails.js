@@ -2,62 +2,57 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-// import AppContext from '../context/AppContext';
 import Navbar from '../components/Navbar';
 import TableCheckout from '../components/TableCheckout';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function OrderDetails() {
-  // const { cart } = useContext(AppContext);
-
   const [orderData, setOrderData] = useState([]);
-  // const [sellers, setSellers] = useState([]);
-  // const [selectedSeller, setSelectedSeller] = useState('');
-  // const [address, setAddress] = useState('');
-  // const [number, setNumber] = useState();
+  const [sallerData, setSallerData] = useState([]);
 
   const { id } = useParams();
-  console.log(id);
 
   useEffect(() => {
-    const cartList = getItemLocalStorage('cart');
-    setOrderData(cartList);
+    // get order data by id
+    axios.get(`http://localhost:3001/salesProducts/${id}`)
+      .then((response) => {
+        setOrderData(response.data);
+        console.log(response.data);
+      }).catch((error) => {
+        console.log(error);
+      });
 
-    const fetchSallers = () => {
-      axios.get(`http://localhost:3001/sales/${id}`)
-        .then((response) => {
-          console.log(response.data);
-          setOrderData(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    fetchSallers();
+    // get saller data by id
+    axios.get(`http://localhost:3001/sellerName/${id}`)
+      .then((response) => {
+        setSallerData(response.data.seller);
+      }).catch((error) => {
+        console.log(error);
+      });
   }, []);
 
-  // const handleSubmit = () => {
-  //   axios.post('http://localhost:3001/orders', {
-  //     seller: selectedSeller,
-  //     address,
-  //     number,
-  //     orderData,
-  //   }).then((response) => {
-  //     navigate(`/customer/orders/${response.data.id}`);
-  //   }).catch((error) => {
-  //     console.log(error);
-  //   });
-  // };
+  const handleDelivered = () => {
+    const userData = getItemLocalStorage('user');
+    const config = {
+      headers: { Authorization: userData.token },
+    };
+    axios.put(
+      `http://localhost:3001/salesProducts/${id}`,
+      { status: 'Entregue' },
+      config,
+    )
+      .then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      });
+  };
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:3001/salesProducts/1')
-  //     .then((response) => {
-  //       console.log(response);
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
+  const formatDate = (date) => {
+    let formattedDate = new Date(date);
+    formattedDate = formattedDate.toLocaleDateString('pt-BR');
+    return formattedDate;
+  };
 
   return (
     <div>
@@ -65,10 +60,44 @@ export default function OrderDetails() {
 
       <main className="p-4">
         <p className="text-lg font-bold ">Order details</p>
+        <p
+          data-testid="customer_order_details__element-order-details-label-order-id"
+        >
+          {`Pedido ${orderData.id}` }
+
+        </p>
+        <p
+          data-testid="customer_order_details__element-order-details-label-seller-name"
+        >
+          {`Vendedor ${sallerData.name}` }
+        </p>
+        <p
+          data-testid={
+            `customer_order_details__element-order-details-label-delivery-status${1}`
+          }
+        >
+          {`Status ${orderData.status}` }
+        </p>
+        <p
+          data-testid="customer_order_details__element-order-details-label-order-date"
+        >
+          {formatDate(orderData.saleDate)}
+        </p>
+        { orderData.status !== 'Entregue' ? (
+          <button
+            type="button"
+            data-testid="customer_order_details__button-delivery-check"
+            onClick={ () => handleDelivered() }
+          >
+            Marcar como entregue
+          </button>
+        ) : null}
+
+        {console.log(orderData)}
 
         {
           orderData
-            ? <TableCheckout orderData={ orderData } />
+            ? <TableCheckout orderData={ orderData.products } />
             : <p>Something went wrong</p>
         }
 
