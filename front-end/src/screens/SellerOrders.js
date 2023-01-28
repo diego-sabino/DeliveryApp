@@ -7,16 +7,15 @@ import SaleCard from '../components/SaleCard';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 import getLocation from '../utils/OrdersUtil';
 
-export default function CustomerOrders() {
+export default function SellerOrders() {
   const [ordersList, setOrdersList] = useState([]);
-  const [updatedOrders, setUpdatedOrders] = useState([]);
   const [url, setUrl] = useState('');
 
   const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/sales')
+    const sellerData = getItemLocalStorage('user');
+    axios.get(`http://localhost:3001/seller/${sellerData.id}`)
       .then((response) => {
         setOrdersList(response.data);
       }).catch((error) => {
@@ -26,27 +25,20 @@ export default function CustomerOrders() {
     setUrl(getLocation(location.pathname));
   }, []);
 
-  useEffect(() => {
-    const userData = getItemLocalStorage('user');
-    const filteredOrders = ordersList.filter((order) => order.userId === userData.id);
-    setUpdatedOrders(filteredOrders);
-  }, [ordersList]);
-
   return (
     <div>
       <Navbar />
 
       <main className="flex gap-4 flex-wrap p-6">
-        { (updatedOrders.length > 0)
-          ? updatedOrders.map((sale, index) => (
+        { (ordersList.length > 0)
+          ? ordersList.map((sale, index) => (
             <SaleCard
               key={ index }
               sale={ sale }
               url={ url }
             />
           ))
-          : <p>Orders not founded</p>}
-
+          : <p>Sales not founded</p>}
       </main>
     </div>
   );
