@@ -11,8 +11,6 @@ export default function TableCheckout({ orderData }) {
 
   const customerCheckout = window.location.pathname === '/customer/checkout';
 
-  console.log(orderData);
-
   const removeItem = (id) => {
     const newOrderData = orderData.filter((item) => item.id !== id);
     localStorage.setItem('cart', JSON.stringify(newOrderData));
@@ -41,10 +39,16 @@ export default function TableCheckout({ orderData }) {
   }, [customerCheckout, setCart]);
 
   useEffect(() => {
-    const totalPriceReduce = cart
-      .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
-    setTotalPrice(totalPriceReduce);
-  }, [cart]);
+    if (customerCheckout) {
+      const totalPriceReduce = cart
+        .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
+      setTotalPrice(totalPriceReduce);
+    } else if (orderData) {
+      const total = orderData.map((item) => item.price * item.product.quantity)
+        .reduce((acc, current) => acc + current);
+      setTotalPrice(total);
+    }
+  }, [orderData, cart, customerCheckout, setTotalPrice]);
 
   return (
     <table
@@ -90,8 +94,7 @@ export default function TableCheckout({ orderData }) {
                 `customer_${testIdRoute}__element-order-table-quantity-${index}`
               }
             >
-              {item.quantity}
-
+              {(customerCheckout) ? item.quantity : item.product.quantity}
             </td>
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
@@ -108,7 +111,9 @@ export default function TableCheckout({ orderData }) {
                 `customer_${testIdRoute}__element-order-table-sub-total-${index}`
               }
             >
-              {(item.price * item.quantity).toFixed(2).replace('.', ',')}
+              {(customerCheckout)
+                ? (item.price * item.quantity).toFixed(2).replace('.', ',')
+                : (item.price * item.product.quantity).toFixed(2).replace('.', ',') }
 
             </td>
             {(testIdRoute === 'checkout') && (

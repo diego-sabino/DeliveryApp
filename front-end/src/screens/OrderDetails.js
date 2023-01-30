@@ -17,7 +17,6 @@ export default function OrderDetails() {
     axios.get(`http://localhost:3001/salesProducts/${id}`)
       .then((response) => {
         setOrderData(response.data);
-        console.log(response.data);
       }).catch((error) => {
         console.log(error);
       });
@@ -83,20 +82,18 @@ export default function OrderDetails() {
         >
           {formatDate(orderData.saleDate)}
         </p>
-        { orderData.status !== 'Entregue' ? (
-          <button
-            type="button"
-            data-testid="customer_order_details__button-delivery-check"
-            onClick={ () => handleDelivered() }
-          >
-            Marcar como entregue
-          </button>
-        ) : null}
 
-        {console.log(orderData)}
+        <button
+          type="button"
+          data-testid="customer_order_details__button-delivery-check"
+          onClick={ () => handleDelivered() }
+          disabled={ orderData.status !== 'Em Trânsito' }
+        >
+          Marcar como entregue
+        </button>
 
         {
-          orderData
+          (orderData)
             ? <TableCheckout orderData={ orderData.products } />
             : <p>Something went wrong</p>
         }
