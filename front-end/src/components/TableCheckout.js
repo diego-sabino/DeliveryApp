@@ -1,21 +1,30 @@
 import { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+
 import { tableProprietiesCheckout,
   tableProprietiesOrder } from '../utils/TableProprieties';
 import AppContext from '../context/AppContext';
+import { getLocation } from '../utils/OrdersUtil';
 
 export default function TableCheckout({ orderData }) {
   const { cart, setCart, totalPrice, setTotalPrice } = useContext(AppContext);
   const [testIdRoute, setTestIdRoute] = useState('order_details' || 'checkout');
   const [tableProprieties, setTableProprieties] = useState();
+  const [role, setRole] = useState('');
 
-  const customerCheckout = window.location.pathname === '/customer/checkout';
+  const location = useLocation();
+  const customerCheckout = location.pathname === '/customer/checkout';
 
   const removeItem = (id) => {
     const newOrderData = orderData.filter((item) => item.id !== id);
     localStorage.setItem('cart', JSON.stringify(newOrderData));
     setCart(newOrderData);
   };
+
+  useEffect(() => {
+    setRole(getLocation(location.pathname));
+  }, []);
 
   useEffect(() => {
     const getCartFromLocalStorage = () => {
@@ -76,14 +85,14 @@ export default function TableCheckout({ orderData }) {
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
               data-testid={
-                `customer_${testIdRoute}__element-order-table-item-number-${index}`
+                `${role}_${testIdRoute}__element-order-table-item-number-${index}`
               }
             >
               {index + 1}
             </td>
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
-              data-testid={ `customer_${testIdRoute}__element-order-table-name-${index}` }
+              data-testid={ `${role}_${testIdRoute}__element-order-table-name-${index}` }
             >
               {item.name}
 
@@ -91,7 +100,7 @@ export default function TableCheckout({ orderData }) {
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
               data-testid={
-                `customer_${testIdRoute}__element-order-table-quantity-${index}`
+                `${role}_${testIdRoute}__element-order-table-quantity-${index}`
               }
             >
               {(customerCheckout) ? item.quantity : item.product.quantity}
@@ -99,7 +108,7 @@ export default function TableCheckout({ orderData }) {
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
               data-testid={
-                `customer_${testIdRoute}__element-order-table-unit-price-${index}`
+                `${role}_${testIdRoute}__element-order-table-unit-price-${index}`
               }
             >
               {(item.price)
@@ -108,7 +117,7 @@ export default function TableCheckout({ orderData }) {
             <td
               className="px-4 py-2 md:px-6 md:py-3 text-md font-medium"
               data-testid={
-                `customer_${testIdRoute}__element-order-table-sub-total-${index}`
+                `${role}_${testIdRoute}__element-order-table-sub-total-${index}`
               }
             >
               {(customerCheckout)
@@ -136,13 +145,13 @@ export default function TableCheckout({ orderData }) {
       </tbody>
       <div
         className="
-          bg-blue-500 hover:bg-blue-700
+          bg-[#036B52]
           text-white font-bold py-2 px-4
-          rounded top-24 right-0 fixed"
-        data-testid={ `customer_${testIdRoute}__element-order-total-price` }
+          rounded right-0 absolute mt-2"
+        data-testid={ `${role}_${testIdRoute}__element-order-total-price` }
       >
         <p>
-          {`R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
+          {`TOTAL: R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
         </p>
       </div>
     </table>

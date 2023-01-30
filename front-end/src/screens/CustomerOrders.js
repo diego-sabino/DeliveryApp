@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import SaleCard from '../components/SaleCard';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
-import getLocation from '../utils/OrdersUtil';
+import { getLocation } from '../utils/OrdersUtil';
 
 export default function CustomerOrders() {
   const [ordersList, setOrdersList] = useState([]);
@@ -13,7 +13,6 @@ export default function CustomerOrders() {
   const [url, setUrl] = useState('');
 
   const location = useLocation();
-  console.log(location.pathname);
 
   useEffect(() => {
     axios.get('http://localhost:3001/sales')

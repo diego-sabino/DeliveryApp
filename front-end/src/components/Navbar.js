@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { FiLogOut } from 'react-icons/fi';
 import { getItemLocalStorage, removeItemLocalStorage } from '../utils/LocalStorageUtil';
-import getLocation from '../utils/OrdersUtil';
+import { getLocation } from '../utils/OrdersUtil';
 
 export default function Navbar() {
   const [userData, setUserData] = useState({});

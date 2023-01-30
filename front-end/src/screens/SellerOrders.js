@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import SaleCard from '../components/SaleCard';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
-import getLocation from '../utils/OrdersUtil';
+import { getLocation } from '../utils/OrdersUtil';
 
 export default function SellerOrders() {
   const [ordersList, setOrdersList] = useState([]);
