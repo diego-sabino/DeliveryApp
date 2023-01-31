@@ -1,16 +1,13 @@
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import AppContext from '../context/AppContext';
 import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function DrinkCard({ drink, handleClick, handleRemove }) {
-  const { cart, setCart } = useContext(AppContext);
+  const { cart, setCart, orderData } = useContext(AppContext);
 
   const [quantity, setQuantity] = useState(0);
-
-  const minusOne = -1;
   const parseFloatPrice = parseFloat(drink.price).toFixed(2).replace('.', ',');
 
   useEffect(() => {
@@ -31,88 +28,64 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
     getCartFromLocalStorage();
   }, [cart]);
 
-  const handleInputChange = (event) => {
-    setQuantity(event.target.value);
-    const num = parseFloat(event.target.value);
-    const newCart = [...cart];
-    const index = newCart.findIndex((item) => item.id === drink.id);
-    if (index !== minusOne) {
-      newCart[index].quantity = num;
-    } else {
-      console.log('tem nada aqui');
-      newCart.push({ ...drink, quantity: num });
-    }
-
-    setCart(newCart);
-    setItemLocalStorage('cart', newCart);
+  const removeItem = (id) => {
+    const newOrderData = orderData.filter((item) => item.id !== id);
+    localStorage.setItem('cart', JSON.stringify(newOrderData));
+    setCart(newOrderData);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div
+      className="flex flex-col items-center
+     w-[150px] bg-gray-100 rounded-xl shadow-lg shadow-gray-500/40 grow h-[350px]"
+    >
       <img
         data-testid={ `customer_products__img-card-bg-image-${drink.id}` }
         src={ drink.url_image }
         alt={ drink.name }
-        className="w-56 object-cover h-60"
+        className="object-cover w-full h-2/3"
       />
 
-      <div className="flex flex-col px-10 py-4">
-        <div className="flex gap-2">
-          <p
-            data-testid={ `customer_products__element-card-title-${drink.id}` }
-          >
-            {drink.name}
-          </p>
+      <div className="flex flex-col px-2 py-2 items-center h-fit">
+        <p
+          className="text-sm"
+          data-testid={ `customer_products__element-card-title-${drink.id}` }
+        >
+          {drink.name}
+        </p>
 
-          <p
-            data-testid={ `customer_products__element-card-price-${drink.id}` }
-          >
-            {`R$ ${parseFloatPrice}`}
-          </p>
-        </div>
+        <p
+          data-testid={ `customer_products__element-card-price-${drink.id}` }
+        >
+          {`R$ ${parseFloatPrice}`}
+        </p>
 
         <div>
           {(quantity > 0) ? (
-            <div className="flex w-fit">
-              <button
-                onClick={ () => handleClick(drink) }
-                type="button"
-                className="p-2 bg-[#036B52] rounded-l-lg text-white"
-                data-testid={ `customer_products__button-card-add-item-${drink.id}` }
-              >
-                <AiOutlinePlus />
-              </button>
-
-              <input
-                data-testid={ `customer_products__input-card-quantity-${drink.id}` }
-                className="px-5 py-2 bg-white"
-                name="quantity"
-                value={ quantity }
-                onChange={ (event) => handleInputChange(event) }
-              />
-
-              <button
-                onClick={ () => handleRemove(drink) }
-                type="button"
-                className="p-2 bg-[#036B52] rounded-r-lg text-white"
-                data-testid={ `customer_products__button-card-rm-item-${drink.id}` }
-              >
-                <AiOutlineMinus />
-              </button>
-            </div>
-          ) : (
             <div className="flex justify-center mt-2">
               <button
-                onClick={ () => handleClick(drink) }
+                onClick={ () => removeItem(drink.id) }
                 type="button"
-                className="px-6 py-2 transition ease-in
-              duration-200 uppercase rounded-full hover:bg-green-main
-            hover:text-white border-2 border-black hover:border-green-main
-              focus:outline-none"
+                className="px-4 py-2 transition ease-in
+                  duration-200 uppercase rounded-full bg-green-main
+                text-white border-2 text-xs border-green-main"
               >
-                Add to cart
+                Remove from cart
               </button>
-            </div>)}
+            </div>
+          )
+            : (
+              <div className="flex justify-center mt-2">
+                <button
+                  onClick={ () => handleClick(drink) }
+                  type="button"
+                  className="px-4 py-2 transition ease-in
+                    duration-200 uppercase rounded-full border-2 border-gray-700 text-xs
+                    focus:outline-none"
+                >
+                  Add to cart
+                </button>
+              </div>)}
 
         </div>
       </div>

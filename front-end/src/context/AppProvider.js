@@ -8,6 +8,9 @@ function AppProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [toggle, setToggle] = useState(false);
   const [changeStatus, setChangeStatus] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [orderData, setOrderData] = useState([]);
+
   const value = React.useMemo(() => ({
     userData,
     cart,
@@ -19,7 +22,11 @@ function AppProvider({ children }) {
     setCart,
     totalPrice,
     setTotalPrice,
-  }), [userData, cart, toggle, changeStatus, totalPrice]);
+    open,
+    setOpen,
+    orderData,
+    setOrderData,
+  }), [userData, cart, toggle, changeStatus, totalPrice, open, orderData]);
 
   return (
     <AppContext.Provider

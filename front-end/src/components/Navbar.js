@@ -19,7 +19,7 @@ export default function Navbar() {
     }
 
     setUrl(getLocation(location.pathname));
-  }, []);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     removeItemLocalStorage('user');
@@ -27,7 +27,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex justify-between h-20 bg-[#036B52] uppercase items-stretch">
+    <nav
+      className="flex justify-between h-20
+    bg-[#036B52] uppercase items-stretch"
+    >
       <div
         className={ `flex ${(url === 'seller')
           ? 'hidden' : 'block'}` }

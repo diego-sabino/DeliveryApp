@@ -9,9 +9,8 @@ import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 import { statusCreated } from '../utils/LoginUtil';
 
 export default function CustomerCheckout() {
-  const { cart, setCart } = useContext(AppContext);
+  const { cart, setCart, orderData, setOrderData } = useContext(AppContext);
 
-  const [orderData, setOrderData] = useState([]);
   const [sellers, setSellers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState('');
   const [address, setAddress] = useState('');
@@ -113,8 +112,6 @@ export default function CustomerCheckout() {
       .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
     setTotalPrice(totalPriceReduce);
   }, [cart]);
-
-  console.log(orderData);
 
   return (
     <div>

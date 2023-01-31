@@ -33,9 +33,9 @@ function Menu({ userData, role }) {
   };
 
   return (
-    <div className="hamburger-menu">
+    <div className="hamburger-menu w-[70px]">
       <input id="menu__toggle" type="checkbox" />
-      <label className="menu__btn mt-[2px] ml-[-2px]" htmlFor="menu__toggle">
+      <label className="menu__btn mt-[9px] ml-[-2px]" htmlFor="menu__toggle">
         <span />
       </label>
 

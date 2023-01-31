@@ -10,6 +10,7 @@ import AdminManager from '../screens/AdminManager';
 import OrderDetails from '../screens/OrderDetails';
 import SellerOrders from '../screens/SellerOrders';
 import SaleDetails from '../screens/SaleDetails';
+import Cart from '../components/Cart';
 
 function AppRoute() {
   return (
@@ -25,6 +26,7 @@ function AppRoute() {
           <Route path="/login" element={ <Login /> } exact />
           <Route path="/register" element={ <Register /> } exact />
           <Route path="/seller/orders" element={ <SellerOrders /> } exact />
+          <Route path="/sacola" element={ <Cart /> } exact />
           <Route path="/seller/orders/:id" element={ <SaleDetails /> } exact />
         </Routes>
       </AppProvider>
