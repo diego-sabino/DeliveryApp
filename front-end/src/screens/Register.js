@@ -73,11 +73,19 @@ export default function Register() {
 
   return (
     <section className="h-screen flex flex-col justify-center items-center">
-      <h1
-        className="text-[30px] font-thin uppercase"
-      >
-        Sign up
-      </h1>
+      <div className="flex flex-col w-[330px] gap-2 mb-5">
+        <h1
+          className="text-2xl font-bold"
+        >
+          Sign Up 👋
+        </h1>
+        <p
+          className="text-gray-400 text-sm"
+        >
+          Create account and choose your favorite drink
+
+        </p>
+      </div>
 
       <form
         className="space-y-4"
@@ -91,9 +99,9 @@ export default function Register() {
           id="name"
           className="
             border sm:text-sm rounded-lg
-            block p-2.5 w-[328px] border-[#BFBFBF]
-            focus:ring-blue-500 h-[48px]
-            focus:border-blue-500"
+            block p-2.5 w-[328px]
+            border-[#BFBFBF] h-[48px]
+            "
           placeholder="Full name"
           data-testid="common_register__input-name"
           required
@@ -107,9 +115,7 @@ export default function Register() {
           id="email"
           className="
             border sm:text-sm rounded-lg
-            block p-2.5 w-[328px] border-[#BFBFBF]
-            focus:ring-blue-500 h-[48px]
-            focus:border-blue-500"
+            block p-2.5 w-[328px] border-[#BFBFBF] h-[48px]"
           placeholder="E-mail"
           required
           data-testid="common_register__input-email"
@@ -124,9 +130,7 @@ export default function Register() {
           onChange={ handleChange }
           className="border border-[#BFBFBF]
             sm:text-sm rounded-lg h-[48px]
-            block w-full p-2.5
-            focus:ring-blue-500
-            focus:border-blue-500"
+            block w-full p-2.5"
           required
           data-testid="common_register__input-password"
         />
@@ -137,10 +141,12 @@ export default function Register() {
             disabled={ disableBtn }
             data-testid="common_register__button-register"
             className="w-[221px] h-[43px] text-white
-            bg-[#00a3ffcc]
+            bg-green-main
             focus:ring-4 focus:outline-none
-            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] uppercase
-            font-thin disabled:bg-gray-400
+            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]uppercase
+            disabled:bg-[#ced7d3]
+            disabled:text-[#ffffff]
+            disabled:cursor-not-allowed
             focus:ring-primary-300 rounded-[15px] text-base
             px-5 py-2.5 text-center"
           >
@@ -152,7 +158,7 @@ export default function Register() {
           Have an account already?
           <a
             href="/login"
-            className="font-medium hover:underline text-[#00a3ffcc] ml-2"
+            className="font-medium hover:underline text-green-main ml-2"
             data-testid="common_login__element-invalid-email"
           >
             Log in

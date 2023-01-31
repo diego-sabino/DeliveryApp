@@ -16,7 +16,7 @@ function AppRoute() {
     <BrowserRouter>
       <AppProvider>
         <Routes>
-          <Route path="/" element={ <Navigate to="/login" /> } />
+          <Route path="/" element={ <Navigate to="/customer/products" /> } />
           <Route path="/admin/manage" element={ <AdminManager /> } exact />
           <Route path="/customer/checkout" element={ <CustomerCheckout /> } exact />
           <Route path="/customer/products" element={ <CustomerProducts /> } exact />

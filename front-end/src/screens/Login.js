@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { statusOk, timeOut, minCharacterPassword, emailRegex } from '../utils/LoginUtil';
 import { getItemLocalStorage, setItemLocalStorage } from '../utils/LocalStorageUtil';
+// import logo from '../images/logo-bardolado.png';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -61,7 +62,6 @@ export default function Login() {
       password,
     })
       .then((response) => {
-        console.log(response.data);
         if (response.status === statusOk) {
           setItemLocalStorage('user', response.data);
           setAuthorized(true);
@@ -79,11 +79,15 @@ export default function Login() {
 
   return (
     <section className="h-screen flex flex-col justify-center items-center">
-      <h1
-        className="text-[30px] font-thin uppercase"
-      >
-        Login
-      </h1>
+      <div className="flex flex-col w-[330px] gap-2 mb-5">
+        {/* <img src={ logo } alt="Bar do lado logo" /> */}
+        <h1
+          className="text-2xl font-bold"
+        >
+          Welcome Back 👋
+        </h1>
+        <p className="text-gray-400">Sign to your account</p>
+      </div>
 
       <form
         className="space-y-4"
@@ -98,8 +102,7 @@ export default function Login() {
           className="
             border sm:text-sm rounded-lg
             block p-2.5 w-[328px] border-[#BFBFBF]
-            focus:ring-blue-500 h-[48px]
-            focus:border-blue-500"
+            h-[48px]"
           placeholder="E-mail"
           required
           data-testid="common_login__input-email"
@@ -114,9 +117,7 @@ export default function Login() {
           onChange={ handleChange }
           className="border border-[#BFBFBF]
             sm:text-sm rounded-lg h-[48px]
-            block w-full p-2.5
-            focus:ring-blue-500
-            focus:border-blue-500"
+            block w-full p-2.5"
           required
           data-testid="common_login__input-password"
         />
@@ -127,10 +128,11 @@ export default function Login() {
             type="submit"
             data-testid="common_login__button-login"
             className="w-[221px] h-[43px] text-white
-            bg-[#00a3ffcc]
+            bg-green-main
             focus:ring-4 focus:outline-none
             drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]uppercase
-            font-thin disabled:bg-gray-400
+            font-thin disabled:bg-[#ced7d3]
+            disabled:text-[#ffffff]
             disabled:cursor-not-allowed
             focus:ring-primary-300 rounded-[15px] text-base
             px-5 py-2.5 text-center"
@@ -140,11 +142,11 @@ export default function Login() {
         </div>
 
         <p className="text-sm text-center font-light text-gray-400">
-          Don&apos;t have an account yet?
+          Don&apos;t have an account?
           <button
             type="button"
             onClick={ () => navigate('/register') }
-            className="font-medium hover:underline text-[#00a3ffcc] ml-2"
+            className="font-medium hover:underline text-green-main ml-2"
             data-testid="common_login__button-register"
           >
             Sign up

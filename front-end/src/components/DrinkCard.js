@@ -48,7 +48,7 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
   };
 
   return (
-    <div className="flex flex-col w-fit items-center">
+    <div className="flex flex-col items-center justify-center">
       <img
         data-testid={ `customer_products__img-card-bg-image-${drink.id}` }
         src={ drink.url_image }
@@ -56,7 +56,7 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
         className="w-56 object-cover h-60"
       />
 
-      <div className="flex flex-col bg-[#EAF1EF] px-10 py-4">
+      <div className="flex flex-col px-10 py-4">
         <div className="flex gap-2">
           <p
             data-testid={ `customer_products__element-card-title-${drink.id}` }
@@ -69,35 +69,51 @@ export default function DrinkCard({ drink, handleClick, handleRemove }) {
           >
             {`R$ ${parseFloatPrice}`}
           </p>
-
         </div>
 
-        <div className="flex w-fit">
-          <button
-            onClick={ () => handleClick(drink) }
-            type="button"
-            className="p-2 bg-[#036B52] rounded-l-lg text-white"
-            data-testid={ `customer_products__button-card-add-item-${drink.id}` }
-          >
-            <AiOutlinePlus />
-          </button>
+        <div>
+          {(quantity > 0) ? (
+            <div className="flex w-fit">
+              <button
+                onClick={ () => handleClick(drink) }
+                type="button"
+                className="p-2 bg-[#036B52] rounded-l-lg text-white"
+                data-testid={ `customer_products__button-card-add-item-${drink.id}` }
+              >
+                <AiOutlinePlus />
+              </button>
 
-          <input
-            data-testid={ `customer_products__input-card-quantity-${drink.id}` }
-            className="px-5 py-2 bg-white"
-            name="quantity"
-            value={ quantity }
-            onChange={ (event) => handleInputChange(event) }
-          />
+              <input
+                data-testid={ `customer_products__input-card-quantity-${drink.id}` }
+                className="px-5 py-2 bg-white"
+                name="quantity"
+                value={ quantity }
+                onChange={ (event) => handleInputChange(event) }
+              />
 
-          <button
-            onClick={ () => handleRemove(drink) }
-            type="button"
-            className="p-2 bg-[#036B52] rounded-r-lg text-white"
-            data-testid={ `customer_products__button-card-rm-item-${drink.id}` }
-          >
-            <AiOutlineMinus />
-          </button>
+              <button
+                onClick={ () => handleRemove(drink) }
+                type="button"
+                className="p-2 bg-[#036B52] rounded-r-lg text-white"
+                data-testid={ `customer_products__button-card-rm-item-${drink.id}` }
+              >
+                <AiOutlineMinus />
+              </button>
+            </div>
+          ) : (
+            <div className="flex justify-center mt-2">
+              <button
+                onClick={ () => handleClick(drink) }
+                type="button"
+                className="px-6 py-2 transition ease-in
+              duration-200 uppercase rounded-full hover:bg-green-main
+            hover:text-white border-2 border-black hover:border-green-main
+              focus:outline-none"
+              >
+                Add to cart
+              </button>
+            </div>)}
+
         </div>
       </div>
     </div>
