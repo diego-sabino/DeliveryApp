@@ -10,6 +10,9 @@ function AppProvider({ children }) {
   const [changeStatus, setChangeStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const [orderData, setOrderData] = useState([]);
+  const [orderCheckout, setOrderCheckout] = useState({});
+  const [payment, setPayment] = useState('credit-card');
+  const [cardNumber, setCardNumber] = useState();
 
   const value = React.useMemo(() => ({
     userData,
@@ -18,6 +21,12 @@ function AppProvider({ children }) {
     setToggle,
     setUserData,
     changeStatus,
+    orderCheckout,
+    payment,
+    cardNumber,
+    setCardNumber,
+    setPayment,
+    setOrderCheckout,
     setChangeStatus,
     setCart,
     totalPrice,
@@ -26,7 +35,16 @@ function AppProvider({ children }) {
     setOpen,
     orderData,
     setOrderData,
-  }), [userData, cart, toggle, changeStatus, totalPrice, open, orderData]);
+  }), [userData,
+    cart,
+    toggle,
+    changeStatus,
+    orderCheckout,
+    payment,
+    totalPrice,
+    cardNumber,
+    open,
+    orderData]);
 
   return (
     <AppContext.Provider

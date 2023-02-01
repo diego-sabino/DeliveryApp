@@ -17,6 +17,7 @@ export default function Navbar() {
   const [role, setRole] = useState('');
 
   const location = useLocation();
+  const customerCheckout = location.pathname === '/customer/checkout';
 
   useEffect(() => {
     const user = getItemLocalStorage('user');
@@ -45,29 +46,28 @@ export default function Navbar() {
 
       <p>LOGO AQUI</p>
 
-      {
-        (userData !== undefined)
-          ? (
-            <button
-              type="button"
-              className={ `text-gray-500 hover:text-gray-600
+      { (userData !== undefined && !customerCheckout)
+        ? (
+          <button
+            type="button"
+            className={ `text-gray-500 hover:text-gray-600
               focus:outline-none 
               focus:text-gray-600 flex text-xs gap-2
                ${(location.pathname === '/customer/orders') ? 'hidden' : 'block'}` }
-              onClick={ () => setOpen(true) }
-              disabled={ isDisabled }
-            >
-              <FiShoppingBag className="self-center text-xl text-black" />
-              <div>
-                <p>
-                  {`R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
-                </p>
-                {/* <span>{`${orderData.length} itens`}</span> */}
-              </div>
-            </button>)
-          : <Link to="/login"><CiUser className="self-center text-3xl" /></Link>
-      }
-
+            onClick={ () => setOpen(true) }
+            disabled={ isDisabled }
+          >
+            <FiShoppingBag className="self-center text-xl text-black" />
+            <div>
+              <p>
+                {`R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
+              </p>
+              {console.log(totalPrice)}
+              <span>{(orderData) ? `${orderData.length} itens` : '0 itens' }</span>
+            </div>
+          </button>)
+        : (!customerCheckout)
+        && <Link to="/login"><CiUser className="self-center text-3xl" /></Link>}
     </nav>
   );
 }
