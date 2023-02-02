@@ -11,8 +11,6 @@ export default function AdminManager() {
   const { toggle, setToggle } = useContext(AppContext);
   const [usersList, setUsersList] = useState([]);
 
-  console.log(usersList);
-
   useEffect(() => {
     let users = [];
     axios.get('http://localhost:3001/users')

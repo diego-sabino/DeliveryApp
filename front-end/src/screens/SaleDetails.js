@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar.jsx';
 import TableCheckout from '../components/TableCheckout';
 import AppContext from '../context/AppContext';
 import { formatDate, statusColor } from '../utils/OrdersUtil';

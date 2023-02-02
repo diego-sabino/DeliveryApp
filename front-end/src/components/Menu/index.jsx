@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import './style.css';
+
+import { AiOutlineUserAdd } from 'react-icons/ai';
 import { BiShoppingBag, BiStore } from 'react-icons/bi';
 import { CiLogin } from 'react-icons/ci';
+import { RiFileUserLine } from 'react-icons/ri';
+
 import avatar from '../../images/avatar.png';
 import { removeItemLocalStorage } from '../../utils/LocalStorageUtil';
 
@@ -14,10 +17,8 @@ function Menu({ userData, role }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userData !== undefined) {
-      const name = userData.name.slice(0, userData.name.lastIndexOf(' '));
-      setFirstname(name);
-    }
+    const name = userData.name.slice(0, userData.name.lastIndexOf(' '));
+    setFirstname(name);
   }, []);
 
   const handleLogout = () => {
@@ -63,7 +64,7 @@ function Menu({ userData, role }) {
 
         <li
           className={ ` py-4 uppercase border-t-[.5px]
-          border-y-slate-400 w-full ${(role === 'seller') ? 'hidden' : 'block'}` }
+          border-y-slate-400 w-full ${(role !== 'customer') ? 'hidden' : 'block'}` }
         >
           <button
             onClick={ () => navigate('/customer/products') }
@@ -76,17 +77,47 @@ function Menu({ userData, role }) {
         </li>
 
         <li
-          className="
-          py-4 uppercase border-t-[.5px]
-          border-y-slate-400 w-full"
+          className={ `py-4 uppercase border-t-[.5px]
+          border-y-slate-400 w-full ${(role !== 'administrator' ? 'block' : 'hidden')}` }
         >
           <button
             onClick={ () => handleNavigate() }
             type="button"
-            className="flex items-center uppercase w-full justify-center"
+            className="flex items-center uppercase
+             w-full justify-center"
           >
             <BiShoppingBag className="text-lg" />
             <p className="ml-2">{(role === 'seller') ? 'My sellers' : 'My orders'}</p>
+          </button>
+        </li>
+
+        <li
+          className={ `py-4 uppercase border-t-[.5px]
+          border-y-slate-400 w-full ${(role === 'administrator' ? 'block' : 'hidden')}` }
+        >
+          <button
+            // onClick={ () => handleNavigate() }
+            type="button"
+            className="flex items-center uppercase
+             w-full justify-center"
+          >
+            <RiFileUserLine className="text-lg" />
+            <p className="ml-2">Users list</p>
+          </button>
+        </li>
+
+        <li
+          className={ `py-4 uppercase border-t-[.5px]
+          border-y-slate-400 w-full ${(role === 'administrator' ? 'block' : 'hidden')}` }
+        >
+          <button
+            // onClick={ () => handleNavigate() }
+            type="button"
+            className="flex items-center uppercase
+             w-full justify-center"
+          >
+            <AiOutlineUserAdd className="text-lg" />
+            <p className="ml-2">Register user</p>
           </button>
         </li>
 
@@ -115,4 +146,5 @@ Menu.propTypes = {
     name: PropTypes.string,
     fullName: PropTypes.string,
   }).isRequired,
+  role: PropTypes.string.isRequired,
 };

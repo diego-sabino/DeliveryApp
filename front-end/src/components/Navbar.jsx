@@ -19,6 +19,8 @@ export default function Navbar() {
 
   const location = useLocation();
   const customerCheckout = location.pathname === '/customer/checkout';
+  const customerOrders = location.pathname.startsWith('/customer/orders');
+  const sellerOrders = location.pathname.startsWith('/seller/orders');
 
   useEffect(() => {
     const user = getItemLocalStorage('user');
@@ -51,7 +53,7 @@ export default function Navbar() {
         className="w-9 h-9"
       />
 
-      { (userData !== undefined && !customerCheckout)
+      { (userData !== undefined && !customerCheckout && !customerOrders && !sellerOrders)
         ? (
           <button
             type="button"
@@ -67,11 +69,10 @@ export default function Navbar() {
               <p>
                 {`R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
               </p>
-              {console.log(totalPrice)}
               <span>{(orderData) ? `${orderData.length} itens` : '0 itens' }</span>
             </div>
           </button>)
-        : (!customerCheckout)
+        : (!customerCheckout && !customerOrders && !sellerOrders)
         && <Link to="/login"><CiUser className="self-center text-3xl" /></Link>}
     </nav>
   );

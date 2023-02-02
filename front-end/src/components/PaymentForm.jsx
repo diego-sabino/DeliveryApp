@@ -23,13 +23,13 @@ export default function PaymentForm() {
   return (
     <form
       onSubmit={ handleSubmit }
-      className="flex flex-col px-4"
+      className="flex flex-col px-4 mb-5"
     >
 
       <p
-        className="text-green-main text-xl font-semibold"
+        className="text-green-main text-lg font-semibold"
       >
-        Selecione o seu método de pagamento
+        Selecione o método de pagamento
 
       </p>
       <div id="qrcode" />

@@ -1,53 +1,34 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 
-import { FiLogOut } from 'react-icons/fi';
-import { getItemLocalStorage, removeItemLocalStorage } from '../utils/LocalStorageUtil';
+import Menu from './Menu';
+import { getItemLocalStorage } from '../utils/LocalStorageUtil';
+import logo from '../images/logo.png';
 
 export default function NavbarAdm() {
-  const [userData, setUserData] = useState({});
-
-  const navigate = useNavigate();
+  const [userData, setUserData] = useState(undefined);
+  const [role, setRole] = useState('');
 
   useEffect(() => {
     const user = getItemLocalStorage('user');
     if (user) {
       setUserData(user);
+      setRole(user.role);
     }
   }, []);
 
-  const handleLogout = () => {
-    removeItemLocalStorage('user');
-    navigate('/login');
-  };
-
   return (
-    <nav className="flex justify-between h-20 bg-[#036B52] uppercase items-stretch">
-      <Link
-        to="/admin/manage"
-        className="bg-[#2FC18C] px-4 flex"
-        data-testid="customer_products__element-navbar-link-orders"
-      >
-        <span className="self-center uppercase">Manage users</span>
-      </Link>
+    <nav className="flex justify-between p-3 items-center">
+      {
+        (userData !== undefined)
+          ? <Menu userData={ userData } role={ role } />
+          : <div className="w-[24px] h-[24px]" />
+      }
 
-      <div className="flex text-white">
-        <div
-          className="flex bg-[#421981] px-4"
-          data-testid="customer_products__element-navbar-user-full-name"
-        >
-          <p className=" self-center capitalize">{userData.name}</p>
-        </div>
-
-        <Link
-          to="/"
-          className="flex bg-[#056CF9] px-4"
-          data-testid="customer_products__element-navbar-link-logout"
-          onClick={ handleLogout }
-        >
-          <FiLogOut className="self-center text-xl" />
-        </Link>
-      </div>
+      <img
+        src={ logo }
+        alt="Bar do Lado logo"
+        className="w-9 h-9"
+      />
     </nav>
   );
 }

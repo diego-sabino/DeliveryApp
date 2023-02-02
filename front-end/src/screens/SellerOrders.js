@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar.jsx';
 import SaleCard from '../components/SaleCard';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 import { getLocation } from '../utils/OrdersUtil';

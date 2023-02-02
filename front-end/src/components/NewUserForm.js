@@ -96,10 +96,25 @@ export default function NewUserForm() {
       });
   };
 
+  //   <label
+  //   htmlFor="numberCreditCard"
+  //   className="flex flex-col text-sm text-gray-500"
+  // >
+  //   Número do cartão
+  //   <input
+  //       type="text"
+  //       id="numberCreditCard"
+  //       maxLength="16"
+  //       onChange={ handleChange }
+  //       className="border-b-[1px] border-slate-400
+  //         py-2 bg-transparent text-black text-lg focus:outline-none"
+  //     />
+  // </label>;
+
   return (
     <form
       onSubmit={ handleSubmit }
-      className="flex flex-wrap gap-4 border-2 items-center p-4"
+      className="flex flex-col gap-4"
     >
       <label
         htmlFor="fullname-manage"
@@ -113,7 +128,8 @@ export default function NewUserForm() {
           placeholder="Enter your fullname"
           data-testid="admin_manage__input-name"
           onChange={ handleChange }
-          className="border-2 rounded p-2 w-[300px]"
+          className="border-b-[1px] border-slate-400
+            py-2 bg-transparent text-black text-lg focus:outline-none"
         />
       </label>
 
@@ -129,7 +145,8 @@ export default function NewUserForm() {
           placeholder="your-email@domain.com"
           data-testid="admin_manage__input-email"
           onChange={ handleChange }
-          className="border-2 rounded p-2 w-[300px]"
+          className="border-b-[1px] border-slate-400
+          py-2 bg-transparent text-black text-lg focus:outline-none"
         />
       </label>
 
@@ -145,7 +162,8 @@ export default function NewUserForm() {
           placeholder="******"
           data-testid="admin_manage__input-password"
           onChange={ handleChange }
-          className="border-2 rounded p-2 w-[250px]"
+          className="border-b-[1px] border-slate-400
+          py-2 bg-transparent text-black text-lg focus:outline-none"
         />
       </label>
 
@@ -159,7 +177,8 @@ export default function NewUserForm() {
           id="role-manage"
           onChange={ handleSelect }
           data-testid="admin_manage__select-role"
-          className="border-2 rounded p-2 w-[150px]"
+          className="border-b-[1px] border-slate-400
+          py-2 bg-transparent text-black text-lg focus:outline-none w-full"
           required
         >
           <option
@@ -187,7 +206,7 @@ export default function NewUserForm() {
       <button
         type="submit"
         data-testid="admin_manage__button-register"
-        className="bg-[#036B52] w-[100px] h-[40px]
+        className="bg-green-main h-[40px]
         rounded-xl uppercase text-white text-sm disabled:bg-gray-400"
         disabled={ isDisabled }
       >

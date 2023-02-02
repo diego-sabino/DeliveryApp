@@ -18,7 +18,7 @@ export default function PaymentSection() {
       return (
         <div className="flex flex-col items-center m-2">
           <p
-            className="m-2 text-xl font-semibold text-green-main"
+            className="m-2 text-lg font-semibold text-green-main"
           >
             Pagamento na entrega
 

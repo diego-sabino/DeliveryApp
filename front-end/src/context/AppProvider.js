@@ -10,9 +10,10 @@ function AppProvider({ children }) {
   const [changeStatus, setChangeStatus] = useState(false);
   const [open, setOpen] = useState(false);
   const [orderData, setOrderData] = useState([]);
-  const [orderCheckout, setOrderCheckout] = useState({});
+  const [orderCheckout, setOrderCheckout] = useState(null);
   const [payment, setPayment] = useState('');
   const [cardNumber, setCardNumber] = useState();
+  const [showModal, setShowModal] = useState(false);
 
   const value = React.useMemo(() => ({
     userData,
@@ -35,6 +36,8 @@ function AppProvider({ children }) {
     setOpen,
     orderData,
     setOrderData,
+    showModal,
+    setShowModal,
   }), [userData,
     cart,
     toggle,
@@ -44,6 +47,7 @@ function AppProvider({ children }) {
     totalPrice,
     cardNumber,
     open,
+    showModal,
     orderData]);
 
   return (

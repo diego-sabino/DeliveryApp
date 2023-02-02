@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar.jsx';
 import TableCheckout from '../components/TableCheckout';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 import { formatDate } from '../utils/OrdersUtil';

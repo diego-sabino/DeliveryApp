@@ -2,9 +2,8 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 
 import AppContext from '../context/AppContext';
-import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 
-export default function DrinkCard({ drink, handleClick, handleRemove }) {
+export default function DrinkCard({ drink, handleClick }) {
   const { cart, setCart, orderData } = useContext(AppContext);
 
   const [quantity, setQuantity] = useState(0);
@@ -102,5 +101,4 @@ DrinkCard.propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   handleClick: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired,
 };

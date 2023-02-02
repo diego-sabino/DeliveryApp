@@ -1,18 +1,22 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 
-import { MdNavigateNext } from 'react-icons/md';
-
 import AppContext from '../context/AppContext';
+import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function AddressForm() {
-  const { setOrderCheckout, cart, orderData } = useContext(AppContext);
+  const { setOrderCheckout, orderData } = useContext(AppContext);
 
   const [sellers, setSellers] = useState([]);
   const [selectedSeller, setSelectedSeller] = useState('');
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState();
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [phoneNumber, setPhoneNumber] = useState();
+  const [showSaveOption, setShowSaveOption] = useState(false);
+
+  const totalPrice = getItemLocalStorage('totalPrice');
+  const verifyPhone = phoneNumber && phoneNumber.length !== 0;
+  const verifyNumber = number && number.length !== 0;
 
   useEffect(() => {
     const fetchSallers = () => {
@@ -32,7 +36,7 @@ export default function AddressForm() {
     setSelectedSeller(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSave = () => {
     const userData = getItemLocalStorage('user');
     const order = orderData
       .map((product) => ({ product_id: product.id, quantity: product.quantity }));
@@ -47,16 +51,26 @@ export default function AddressForm() {
       order,
     };
 
-    setOrderCheckout(postData);
+    setOrderCheckout({ postData, phoneNumber });
   };
 
   useEffect(() => {
-    if (address && number && selectedSeller) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
-  }, [address, number, selectedSeller]);
+    const verifyInputs = () => {
+      if (address !== '' && verifyNumber
+         && verifyPhone
+         && selectedSeller !== '') {
+        setShowSaveOption(true);
+      } else {
+        setShowSaveOption(false);
+      }
+    };
+    verifyInputs();
+  }, [address,
+    number,
+    phoneNumber,
+    selectedSeller,
+    verifyNumber,
+    verifyPhone]);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -77,22 +91,19 @@ export default function AddressForm() {
 
   return (
     <form
-      onSubmit={ handleSubmit }
-      className="flex flex-col px-4 gap-12"
+      className="flex flex-col px-4 gap-4 shadow-md py-2 pb-5 bg-white rounded-lg mb-5"
     >
-
       <p
-        className="text-green-main text-2xl font-semibold"
+        className="text-green-main text-lg font-semibold"
       >
-        Details and Delivery address
-
+        Detalhes e endereço de entrega
       </p>
 
       <label
         htmlFor="select-checkout"
-        className="flex flex-col text-sm text-gray-500"
+        className="flex flex-col text-sm text-gray-500 mb-2"
       >
-        Seller
+        Vendedor
         <select
           name="cars"
           id="select-checkout"
@@ -119,13 +130,15 @@ export default function AddressForm() {
 
       <label
         htmlFor="delivery-phone"
-        className="flex flex-col text-sm text-gray-500"
+        className="flex flex-col text-sm text-gray-500 mb-2"
       >
-        Phone number
+        Número de telefone
         <input
           type="tel"
           id="delivery-phone"
-          name="phone"
+          name="phoneNumber"
+          value={ phoneNumber }
+          onChange={ handleChange }
           placeholder="Ex: (11) 91234-5678"
           className="border-b-[1px] border-slate-400
           py-2 text-black text-lg focus:outline-none"
@@ -135,9 +148,9 @@ export default function AddressForm() {
 
       <label
         htmlFor="delivery-city"
-        className="flex flex-col text-sm text-gray-500"
+        className="flex flex-col text-sm text-gray-500 mb-2"
       >
-        City
+        Cidade
         <input
           type="text"
           id="delivery-city"
@@ -151,9 +164,9 @@ export default function AddressForm() {
 
       <label
         htmlFor="delivery-address"
-        className="flex flex-col text-sm text-gray-500"
+        className="flex flex-col text-sm text-gray-500 mb-2"
       >
-        Address
+        Endereço
         <input
           type="text"
           data-testid="customer_checkout__input-address"
@@ -170,9 +183,9 @@ export default function AddressForm() {
 
       <label
         htmlFor="delivery-number"
-        className="flex flex-col text-sm text-gray-500"
+        className="flex flex-col text-sm text-gray-500 mb-2"
       >
-        Number
+        Número
         <input
           type="text"
           data-testid="customer_checkout__input-address-number"
@@ -186,6 +199,26 @@ export default function AddressForm() {
           required
         />
       </label>
+
+      {
+        (showSaveOption)
+        && (
+          <label
+            htmlFor="save-address"
+            className="flex text-sm text-gray-500 items-center gap-2 mb-2"
+          >
+            Salve este endereço
+            <input
+              type="checkbox"
+              required
+              id="save-address"
+              onChange={ () => handleSave() }
+              className="border-b-[1px] border-slate-400
+          py-2 bg-transparent text-black text-lg focus:outline-none"
+            />
+          </label>
+        )
+      }
     </form>
   );
 }
