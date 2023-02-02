@@ -29,7 +29,7 @@ export default function PaymentForm() {
       <p
         className="text-green-main text-xl font-semibold"
       >
-        Select your payment method
+        Selecione o seu método de pagamento
 
       </p>
       <div id="qrcode" />
@@ -41,7 +41,7 @@ export default function PaymentForm() {
         >
           <div className="flex gap-2 items-center">
             <MdOutlineDeliveryDining className=" text-3xl" />
-            Payment on delivery
+            Pagamento na entrega
           </div>
           <input
             onChange={ (e) => handleChange(e) }
@@ -78,7 +78,7 @@ export default function PaymentForm() {
         >
           <div className="flex gap-2 items-center">
             <BsCreditCard2Back className=" text-3xl" />
-            Credit card
+            Cartão de crédito
           </div>
 
           <input
@@ -97,7 +97,7 @@ export default function PaymentForm() {
         >
           <div className="flex gap-2 items-center">
             <BsCreditCard2BackFill className=" text-3xl" />
-            Debit card
+            Cartão de débito
           </div>
 
           <input

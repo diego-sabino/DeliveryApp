@@ -77,12 +77,12 @@ export default function Register() {
         <h1
           className="text-2xl font-bold"
         >
-          Sign Up 👋
+          Cadastre-se 👋
         </h1>
         <p
           className="text-gray-400 text-sm"
         >
-          Create account and choose your favorite drink
+          Crie uma conta e peça suas bebidas favoritas
 
         </p>
       </div>
@@ -102,7 +102,7 @@ export default function Register() {
             block p-2.5 w-[328px]
             border-[#BFBFBF] h-[48px]
             "
-          placeholder="Full name"
+          placeholder="Nome completo"
           data-testid="common_register__input-name"
           required
         />
@@ -125,7 +125,7 @@ export default function Register() {
           type="password"
           name="password"
           id="password"
-          placeholder="Password"
+          placeholder="Senha"
           value={ password }
           onChange={ handleChange }
           className="border border-[#BFBFBF]
@@ -150,18 +150,18 @@ export default function Register() {
             focus:ring-primary-300 rounded-[15px] text-base
             px-5 py-2.5 text-center"
           >
-            Sign up
+            Cadastrar
           </button>
         </div>
 
         <p className="text-sm text-center font-light text-gray-400">
-          Have an account already?
+          Já possui uma conta?
           <a
             href="/login"
             className="font-medium hover:underline text-green-main ml-2"
             data-testid="common_login__element-invalid-email"
           >
-            Log in
+            Entre aqui
           </a>
         </p>
       </form>

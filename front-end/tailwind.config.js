@@ -11,5 +11,9 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  // eslint-disable-next-line global-require
+  plugins: [require('daisyui')],
+  daisyui: {
+    darkTheme: 'light',
+  },
 };

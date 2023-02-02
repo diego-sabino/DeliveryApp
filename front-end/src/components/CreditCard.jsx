@@ -1,17 +1,17 @@
 /* eslint-disable react/jsx-max-depth */
-import React, { useState, useContext } from 'react';
-
+import React, { useState, useContext, useEffect } from 'react';
 import AppContext from '../context/AppContext';
+import { addBar, addSpaces, getLogoCard } from '../utils/CardUtil';
 
 export default function CreditCard() {
-  const { setCardNumbert } = useContext(AppContext);
+  const { setCardNumbert, payment } = useContext(AppContext);
 
   const [numberCreditCard, setNumberCreditCard] = useState('');
   const [nameCreditCard, setNameCreditCard] = useState('');
   const [dateCreditCard, setDateCreditCard] = useState('');
   const [cvvCreditCard, setCvvCreditCard] = useState('');
-
-  const four = 4;
+  const [backgroudImage, setBackgroudImage] = useState('');
+  const [flag, setFlag] = useState('');
 
   const handleChange = ({ target }) => {
     const { id, value } = target;
@@ -36,20 +36,22 @@ export default function CreditCard() {
     }
   };
 
-  function addSpaces(str) {
-    let result = '';
-    for (let i = 0; i < str.length; i += 1) {
-      result += str[i];
-      if ((i + 1) % four === 0) {
-        result += ' ';
-      }
-    }
-    return result;
-  }
-
   const handleSave = () => {
     setCardNumbert(numberCreditCard);
   };
+
+  useEffect(() => {
+    if (payment === 'debit-card') {
+      setBackgroudImage('https://i.imgur.com/kGkSg1v.png');
+    } else if (payment === 'credit-card') {
+      setBackgroudImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjjG98Q2yyCB2J6o3mhW5RpyVNyJAJa7nl2JkoRJ72lfS02suuiIBe84e_Q62xoOhs_7w&usqp=CAU');
+    }
+  }, [payment]);
+
+  useEffect(() => {
+    const logo = getLogoCard(numberCreditCard);
+    setFlag(logo);
+  }, [numberCreditCard]);
 
   return (
     <div className="m-auto flex flex-col gap-4">
@@ -59,7 +61,11 @@ export default function CreditCard() {
      transition-transform transform hover:scale-110 self-center"
       >
 
-        <img className="relative object-cover w-full h-full rounded-xl" alt="asa" src="https://i.pinimg.com/236x/9e/7c/82/9e7c82aa4318ae7a0784993765f4dd19.jpg" />
+        <img
+          className="relative object-cover w-full h-full rounded-xl"
+          alt="asa"
+          src={ backgroudImage }
+        />
 
         <div className="w-full px-8 absolute top-4">
           <div className="flex justify-between">
@@ -67,18 +73,34 @@ export default function CreditCard() {
               <p className="font-light">
                 Name
               </p>
-              <p className="font-medium tracking-widest">
-                {nameCreditCard}
-              </p>
+              {(nameCreditCard)
+                ? (
+                  <p className="font-medium tracking-widest">
+                    {nameCreditCard}
+                  </p>)
+                : (
+                  <p className="font-thin text-slate-400">
+                    Ex.: Matia Antônia
+                  </p>
+                )}
             </div>
-            <img className="w-14 h-14" alt="dada" src="https://i.imgur.com/bbPHJVe.png" />
+            <img className="w-14 h-12 object-contain" alt="flag" src={ flag } />
           </div>
           <div className="pt-1">
             <p className="font-light">
               Card Number
             </p>
             <p className="font-medium tracking-more-wider">
-              { addSpaces(numberCreditCard) }
+              {(numberCreditCard)
+                ? (
+                  <p className="font-medium tracking-widest">
+                    {addSpaces(numberCreditCard)}
+                  </p>)
+                : (
+                  <p className="font-thin text-slate-400">
+                    Ex.: 4444 4444 4444 4444
+                  </p>
+                )}
             </p>
           </div>
           <div className="pt-4 pr-6">
@@ -88,7 +110,16 @@ export default function CreditCard() {
                   Valid
                 </p>
                 <p className="font-medium tracking-wider text-sm">
-                  { dateCreditCard }
+                  {(dateCreditCard)
+                    ? (
+                      <p className="font-medium tracking-widest">
+                        { addBar(dateCreditCard) }
+                      </p>)
+                    : (
+                      <p className="font-thin text-slate-400">
+                        Ex.: 10/28
+                      </p>
+                    )}
                 </p>
               </div>
 
@@ -97,7 +128,16 @@ export default function CreditCard() {
                   CVV
                 </p>
                 <p className="font-bold tracking-more-wider text-sm">
-                  { cvvCreditCard}
+                  {(cvvCreditCard)
+                    ? (
+                      <p className="font-medium tracking-widest">
+                        {cvvCreditCard}
+                      </p>)
+                    : (
+                      <p className="font-thin text-slate-400">
+                        Ex.: 531
+                      </p>
+                    )}
                 </p>
               </div>
             </div>
@@ -112,7 +152,7 @@ export default function CreditCard() {
           htmlFor="nameCreditCard"
           className="flex flex-col text-sm text-gray-500"
         >
-          Name on card
+          Nome no cartão
           <input
             type="text"
             id="nameCreditCard"
@@ -127,7 +167,7 @@ export default function CreditCard() {
           htmlFor="numberCreditCard"
           className="flex flex-col text-sm text-gray-500"
         >
-          Card number
+          Número do cartão
           <input
             type="text"
             id="numberCreditCard"
@@ -142,10 +182,11 @@ export default function CreditCard() {
           htmlFor="dateCreditCard"
           className="flex flex-col text-sm text-gray-500"
         >
-          Expiration date
+          Data de validade
           <input
             type="text"
             id="dateCreditCard"
+            maxLength={ 4 }
             onChange={ handleChange }
             className="border-b-[1px] border-slate-400
           py-2 bg-transparent text-black text-lg focus:outline-none"
@@ -171,7 +212,7 @@ export default function CreditCard() {
           htmlFor="save-card"
           className="flex text-sm text-gray-500 items-center gap-2"
         >
-          Save your card information
+          Salve as informações deste cartão
           <input
             type="checkbox"
             required
@@ -183,6 +224,5 @@ export default function CreditCard() {
         </label>
       </form>
     </div>
-
   );
 }

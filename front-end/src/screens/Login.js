@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { statusOk, timeOut, minCharacterPassword, emailRegex } from '../utils/LoginUtil';
 import { getItemLocalStorage, setItemLocalStorage } from '../utils/LocalStorageUtil';
-// import logo from '../images/logo-bardolado.png';
+import logo from '../images/logo.png';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -78,15 +78,19 @@ export default function Login() {
   };
 
   return (
-    <section className="h-screen flex flex-col justify-center items-center">
-      <div className="flex flex-col w-[330px] gap-2 mb-5">
-        {/* <img src={ logo } alt="Bar do lado logo" /> */}
+    <section className="h-screen flex flex-col  items-center py-5">
+      <div className="flex flex-col w-[330px] gap-2 mb-5 items-center">
+        <img
+          src={ logo }
+          alt="Bar do lado logo"
+          className="w-[120px] h-[120px] mb-5"
+        />
         <h1
           className="text-2xl font-bold"
         >
-          Welcome Back 👋
+          Bem-vindo de volta!
         </h1>
-        <p className="text-gray-400">Sign to your account</p>
+        <p className="text-gray-400">Entre na sua conta</p>
       </div>
 
       <form
@@ -112,7 +116,7 @@ export default function Login() {
           type="password"
           name="password"
           id="password"
-          placeholder="Password"
+          placeholder="Senha"
           value={ password }
           onChange={ handleChange }
           className="border border-[#BFBFBF]
@@ -137,19 +141,19 @@ export default function Login() {
             focus:ring-primary-300 rounded-[15px] text-base
             px-5 py-2.5 text-center"
           >
-            Login
+            Entrar
           </button>
         </div>
 
         <p className="text-sm text-center font-light text-gray-400">
-          Don&apos;t have an account?
+          Não possui uma conta ainda?
           <button
             type="button"
             onClick={ () => navigate('/register') }
             className="font-medium hover:underline text-green-main ml-2"
             data-testid="common_login__button-register"
           >
-            Sign up
+            Cadastre-se
           </button>
         </p>
       </form>

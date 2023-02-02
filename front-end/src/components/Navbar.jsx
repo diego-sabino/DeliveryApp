@@ -8,6 +8,7 @@ import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 import { getLocation } from '../utils/OrdersUtil';
 import Menu from './Menu';
 import AppContext from '../context/AppContext';
+import logo from '../images/logo.png';
 
 export default function Navbar() {
   const { setOpen, orderData, totalPrice } = useContext(AppContext);
@@ -44,7 +45,11 @@ export default function Navbar() {
           : <div className="w-[24px] h-[24px]" />
       }
 
-      <p>LOGO AQUI</p>
+      <img
+        src={ logo }
+        alt="Bar do Lado logo"
+        className="w-9 h-9"
+      />
 
       { (userData !== undefined && !customerCheckout)
         ? (

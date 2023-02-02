@@ -11,7 +11,7 @@ function AppProvider({ children }) {
   const [open, setOpen] = useState(false);
   const [orderData, setOrderData] = useState([]);
   const [orderCheckout, setOrderCheckout] = useState({});
-  const [payment, setPayment] = useState('credit-card');
+  const [payment, setPayment] = useState('');
   const [cardNumber, setCardNumber] = useState();
 
   const value = React.useMemo(() => ({

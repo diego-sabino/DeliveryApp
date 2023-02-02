@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { MdNavigateNext } from 'react-icons/md';
+import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 
 import AppContext from '../context/AppContext';
 import Navbar from '../components/Navbar.jsx';
-import { getItemLocalStorage } from '../utils/LocalStorageUtil';
+import { getItemLocalStorage, setItemLocalStorage } from '../utils/LocalStorageUtil';
 import AddressForm from '../components/AddressForm';
 import PaymentForm from '../components/PaymentForm';
 import PaymentSection from '../components/PaymentSection';
@@ -16,6 +16,7 @@ export default function CustomerCheckout() {
     setPayment } = useContext(AppContext);
 
   const [totalPrice, setTotalPrice] = useState(0);
+  const [component, setComponent] = useState(0);
 
   useEffect(() => {
     const cartList = getItemLocalStorage('cart');
@@ -55,6 +56,7 @@ export default function CustomerCheckout() {
     const totalPriceReduce = cart
       .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
     setTotalPrice(totalPriceReduce);
+    // setItemLocalStorage('totalPrice', totalPriceReduce);
   }, [cart]);
 
   return (
@@ -62,16 +64,16 @@ export default function CustomerCheckout() {
       <Navbar />
 
       <main className="p-4">
-        {/* <AddressForm /> */}
-        {/* <PaymentForm /> */}
-        <PaymentSection />
+        {component === 0 && <AddressForm />}
+        {component === 1 && <PaymentForm />}
+        {component === 2 && <PaymentSection />}
       </main>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-2 bottom-0">
         <button
-          disabled={ payment === '' }
-          type="submit"
-          data-testid="common_login__button-login"
+          disabled={ component <= 0 }
+          type="button"
+          onClick={ () => setComponent(component - 1) }
           className=" text-white
             bg-green-main
             focus:ring-4 focus:outline-none
@@ -81,7 +83,23 @@ export default function CustomerCheckout() {
             focus:ring-primary-300 rounded-[15px] text-base
             p-2 text-center flex items-center gap-1 justify-center"
         >
-          Next
+          <MdNavigateBefore className="text-white text-lg" />
+          Anterior
+        </button>
+        <button
+          disabled={ component >= 3 || payment === '' }
+          type="button"
+          onClick={ () => setComponent(component + 1) }
+          className=" text-white
+            bg-green-main
+            focus:ring-4 focus:outline-none
+            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]uppercase disabled:bg-[#ced7d3]
+            disabled:text-[#ffffff]
+            disabled:cursor-not-allowed
+            focus:ring-primary-300 rounded-[15px] text-base
+            p-2 text-center flex items-center gap-1 justify-center"
+        >
+          Próximo
           <MdNavigateNext className="text-white text-lg" />
         </button>
       </div>

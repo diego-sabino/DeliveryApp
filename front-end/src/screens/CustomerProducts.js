@@ -7,13 +7,14 @@ import DrinkCard from '../components/DrinkCard';
 import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 import Cart from '../components/Cart';
 
+const minusOne = -1;
+
 export default function CustomerProducts() {
   const { cart, setCart, setTotalPrice } = useContext(AppContext);
 
   const [productsList, setProductsList] = useState([]);
   const [notFound, setNotFound] = useState(false);
   const [search, setSearch] = useState('');
-  const minusOne = -1;
 
   useEffect(() => {
     const getCartFromLocalStorage = () => {
@@ -87,7 +88,8 @@ export default function CustomerProducts() {
     const totalPriceReduce = cart
       .reduce((acc, drink) => acc + (drink.price * drink.quantity), 0);
     setTotalPrice(totalPriceReduce);
-  }, [cart]);
+    setItemLocalStorage('totalPrice', totalPriceReduce);
+  }, [cart, setTotalPrice]);
 
   return (
     <div>
@@ -100,8 +102,8 @@ export default function CustomerProducts() {
           <p className="text-green-main text-2xl font-semibold">Special for you</p>
           <input
             className="bg-slate-50 focus:outline-none focus:shadow-outline
-        border border-gray-300 rounded py-2 px-4 block w-full
-        appearance-none leading-normal mt-3"
+              border border-gray-300 rounded py-2 px-4 block w-full
+              appearance-none leading-normal mt-3"
             onChange={ handleSearch }
             type="text"
             placeholder="Search for a product"

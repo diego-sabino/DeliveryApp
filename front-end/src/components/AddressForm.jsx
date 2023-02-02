@@ -186,25 +186,6 @@ export default function AddressForm() {
           required
         />
       </label>
-
-      <div className="flex items-center justify-center">
-        <button
-          disabled={ isDisabled }
-          type="submit"
-          data-testid="common_login__button-login"
-          className=" text-white
-            bg-green-main
-            focus:ring-4 focus:outline-none
-            drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]uppercase disabled:bg-[#ced7d3]
-            disabled:text-[#ffffff]
-            disabled:cursor-not-allowed
-            focus:ring-primary-300 rounded-[15px] text-base
-            p-2 text-center flex items-center gap-1 justify-center"
-        >
-          Next
-          <MdNavigateNext className="text-white text-lg" />
-        </button>
-      </div>
     </form>
   );
 }
