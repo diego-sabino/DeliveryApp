@@ -96,21 +96,6 @@ export default function NewUserForm() {
       });
   };
 
-  //   <label
-  //   htmlFor="numberCreditCard"
-  //   className="flex flex-col text-sm text-gray-500"
-  // >
-  //   Número do cartão
-  //   <input
-  //       type="text"
-  //       id="numberCreditCard"
-  //       maxLength="16"
-  //       onChange={ handleChange }
-  //       className="border-b-[1px] border-slate-400
-  //         py-2 bg-transparent text-black text-lg focus:outline-none"
-  //     />
-  // </label>;
-
   return (
     <form
       onSubmit={ handleSubmit }
