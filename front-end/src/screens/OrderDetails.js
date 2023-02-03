@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 import Navbar from '../components/Navbar.jsx';
-import TableCheckout from '../components/TableCheckout';
 import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 import { formatDate } from '../utils/OrdersUtil';
 import AppContext from '../context/AppContext';
@@ -36,6 +35,8 @@ export default function OrderDetails() {
       });
   }, [changeStatus, id]);
 
+  console.log(orderData);
+
   const handleDelivered = () => {
     const userData = getItemLocalStorage('user');
     const config = {
@@ -57,33 +58,50 @@ export default function OrderDetails() {
   return (
     <div>
       <Navbar />
-      <ProgressBar orderStatus={ orderData.status } />
 
-      <main className="p-4">
+      <main className="p-4 flex flex-col gap-4 ">
         <h1 className="text-lg font-bold text-center">Detalhes do pedido</h1>
         <p
+          className="text-green-main text-center font-bold"
           data-testid="customer_order_details__element-order-details-label-order-id"
         >
-          {`Pedido nº ${orderData.id}` }
+          {`Pedido #${orderData.id} • ${formatDate(orderData.saleDate)}`}
+        </p>
+        <ProgressBar orderStatus={ orderData.status } />
 
-        </p>
-        <p
-          data-testid="customer_order_details__element-order-details-label-order-date"
-        >
-          {formatDate(orderData.saleDate)}
-        </p>
-        <p
-          data-testid="customer_order_details__element-order-details-label-seller-name"
-        >
-          {`Vendedor ${sallerData.name}` }
-        </p>
-        {/* <p
-          data-testid={
-            `customer_order_details__element-order-details-label-delivery-status${1}`
-          }
-        >
-          {`Status ${orderData.status}` }
-        </p> */}
+        <div className="shadow-md p-2 bg-white rounded-lg">
+          <p
+            className="text-green-main font-bold"
+            data-testid="customer_order_details__element-order-details-label-seller-name"
+          >
+            Vendedor
+          </p>
+          <p>
+            {sallerData.name}
+          </p>
+        </div>
+        <div className="shadow-md p-2 bg-white rounded-lg">
+          <p
+            className="text-green-main font-bold"
+            data-testid="customer_order_details__element-order-details-label-seller-name"
+          >
+            Endereço de entrega
+          </p>
+          <p>
+            {`${orderData.deliveryAddress}, ${orderData.deliveryNumber}`}
+          </p>
+        </div>
+        <div className="shadow-md p-2 bg-white rounded-lg">
+          <p
+            className="text-green-main font-bold"
+            data-testid="customer_order_details__element-order-details-label-seller-name"
+          >
+            Resumo de valores
+          </p>
+          <p>
+            {`Total: R$ ${orderData.totalPrice}`}
+          </p>
+        </div>
 
         <div className="flex items-center justify-center">
           <button

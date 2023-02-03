@@ -101,7 +101,7 @@ export default function Cart() {
                     <div className="flex-1 overflow-y-auto py-6 px-4 sm:px-6">
                       <div className="flex items-start justify-between">
                         <Dialog.Title className="text-lg font-medium text-gray-900">
-                          Shopping cart
+                          Carrinho de compras
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
@@ -109,7 +109,7 @@ export default function Cart() {
                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                             onClick={ () => setOpen(false) }
                           >
-                            <span className="sr-only">Close panel</span>
+                            <span className="sr-only">Fechar painel</span>
                             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                           </button>
                         </div>
@@ -173,7 +173,7 @@ export default function Cart() {
                                         className="font-medium text-green-main"
                                         onClick={ () => removeItem(product.id) }
                                       >
-                                        Remove
+                                        Remover
                                       </button>
                                     </div>
                                   </div>
@@ -196,7 +196,7 @@ export default function Cart() {
                         </p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
-                        Shipping and taxes calculated at checkout.
+                        Frete e impostos calculados na finalização da compra.
                       </p>
                       <div className="mt-6">
                         <a
@@ -215,7 +215,7 @@ export default function Cart() {
                         text-sm text-gray-500"
                       >
                         <p>
-                          or
+                          ou
                           {' '}
                           <button
                             type="button"
@@ -223,7 +223,7 @@ export default function Cart() {
                             onClick={ () => setOpen(false) }
                           >
 
-                            Continue Shopping
+                            Continue comprando
                             <span aria-hidden="true"> &rarr;</span>
                           </button>
                         </p>
