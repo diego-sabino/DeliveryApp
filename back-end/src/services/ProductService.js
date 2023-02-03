@@ -10,7 +10,12 @@ const createProduct = async (name, price, url_image, imageAlt) => {
   return product;
 };
 
+const deleteProduct = async (id) => {
+  await products.destroy({ where: { id } });
+};
+
 module.exports = {
   getAllProducts,
   createProduct,
+  deleteProduct,
 };
