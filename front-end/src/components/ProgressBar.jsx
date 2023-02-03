@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default function ProgressBar({ orderStatus }) {
   const orderInPreparation = orderStatus === 'Preparando';
-  const orderOnTheWay = orderStatus === 'Em trânsito';
+  const orderOnTheWay = orderStatus === 'Em Trânsito';
   const orderDelivered = orderStatus === 'Entregue';
 
   return (
