@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable react/jsx-max-depth */
 /* eslint-disable react/jsx-no-comment-textnodes */
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
@@ -150,7 +150,7 @@ export default function Cart() {
                                   items-end justify-between text-sm"
                                   >
                                     <p className="text-gray-500">
-                                      {`Quantity: ${product.quantity} ` }
+                                      {`Quantidade: ${product.quantity} ` }
                                     </p>
 
                                     <button
