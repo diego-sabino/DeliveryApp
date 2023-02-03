@@ -5,36 +5,33 @@ import NavbarAdm from '../components/NavbarAdm';
 import NewUserForm from '../components/NewUserForm';
 import UsersTable from '../components/UsersTable';
 import AppContext from '../context/AppContext';
-import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 
-export default function AdminManager() {
+export default function ManageProducts() {
   const { toggle, setToggle } = useContext(AppContext);
-  const [usersList, setUsersList] = useState([]);
+  const [productsList, setProductsList] = useState([]);
   const [component, setComponenet] = useState(0);
 
   useEffect(() => {
-    let users = [];
-    axios.get('http://localhost:3001/users')
+    axios.get('http://localhost:3001/customer/products')
       .then((response) => {
-        users = response.data;
-        setUsersList(users.filter((user) => user.role !== 'administrator'));
+        setProductsList(response.data);
       }).catch((error) => {
         console.log(error);
       });
   }, [toggle]);
 
-  const removeUser = (userId) => {
-    const user = getItemLocalStorage('user');
-    axios.delete(`http://localhost:3001/user/${userId}`, {
-      headers: { Authorization: user.token },
-    })
-      .then((response) => {
-        console.log(response);
-        setToggle(!toggle);
-      }).catch((error) => {
-        console.log(error);
-      });
-  };
+//   const removeProduct = (userId) => {
+//     const user = getItemLocalStorage('user');
+//     axios.delete(`http://localhost:3001/user/${userId}`, {
+//       headers: { Authorization: user.token },
+//     })
+//       .then((response) => {
+//         console.log(response);
+//         setToggle(!toggle);
+//       }).catch((error) => {
+//         console.log(error);
+//       });
+//   };
 
   return (
     <div>
@@ -81,3 +78,4 @@ export default function AdminManager() {
     </div>
   );
 }
+

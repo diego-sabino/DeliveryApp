@@ -11,6 +11,7 @@ import OrderDetails from '../screens/OrderDetails';
 import SellerOrders from '../screens/SellerOrders';
 import SaleDetails from '../screens/SaleDetails';
 import Cart from '../components/Cart';
+import ManageProducts from '../screens/ManageProducts';
 
 function AppRoute() {
   return (
@@ -19,6 +20,7 @@ function AppRoute() {
         <Routes>
           <Route path="/" element={ <Navigate to="/customer/products" /> } />
           <Route path="/admin/manage" element={ <AdminManager /> } exact />
+          <Route path="/admin/products" element={ <ManageProducts /> } exact />
           <Route path="/customer/checkout" element={ <CustomerCheckout /> } exact />
           <Route path="/customer/products" element={ <CustomerProducts /> } exact />
           <Route path="/customer/orders" element={ <CustomerOrders /> } exact />

@@ -105,12 +105,12 @@ export default function NewUserForm() {
         htmlFor="fullname-manage"
         className="flex flex-col"
       >
-        Name
+        Nome
         <input
           type="text"
           id="fullname-manage"
           value={ fullname }
-          placeholder="Enter your fullname"
+          placeholder="Nome completo"
           data-testid="admin_manage__input-name"
           onChange={ handleChange }
           className="border-b-[1px] border-slate-400
@@ -127,7 +127,7 @@ export default function NewUserForm() {
           type="email"
           id="email-manage"
           value={ email }
-          placeholder="your-email@domain.com"
+          placeholder="seu-email@sdomínio.com"
           data-testid="admin_manage__input-email"
           onChange={ handleChange }
           className="border-b-[1px] border-slate-400
@@ -139,7 +139,7 @@ export default function NewUserForm() {
         htmlFor="password-manage"
         className="flex flex-col"
       >
-        Password
+        Senha
         <input
           type="text"
           id="password-manage"
@@ -156,7 +156,7 @@ export default function NewUserForm() {
         htmlFor="role-manage"
         className="flex flex-col"
       >
-        Role
+        Função
         <select
           type="text"
           id="role-manage"
@@ -172,7 +172,7 @@ export default function NewUserForm() {
             selected
             value="Select a role"
           >
-            Select a role
+            Selecione uma função
           </option>
           {
             roles.map((role, index) => (
@@ -192,10 +192,10 @@ export default function NewUserForm() {
         type="submit"
         data-testid="admin_manage__button-register"
         className="bg-green-main h-[40px]
-        rounded-xl uppercase text-white text-sm disabled:bg-gray-400"
+        rounded-xl uppercase text-white text-sm disabled:bg-gray-400 mt-4"
         disabled={ isDisabled }
       >
-        Register
+        Registrar
       </button>
 
       {(authorization === null || authorization === true) ? null : (
@@ -223,7 +223,7 @@ export default function NewUserForm() {
               />
             </svg>
           </div>
-          <div className="ml-3 text-sm font-normal">User already registred</div>
+          <div className="ml-3 text-sm font-normal">Usuário já existente</div>
         </div>
       )}
     </form>

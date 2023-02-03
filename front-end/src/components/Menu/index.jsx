@@ -49,14 +49,14 @@ function Menu({ userData, role }) {
               className="w-[100px] rounded-md"
             />
             <div className="p-2 text-white">
-              <p>{`Hello, ${firstName}!`}</p>
+              <p>{`Olá, ${firstName}!`}</p>
               <p className="text-xs lowercase mb-4">{userData.email}</p>
               <Link
                 to="/profile"
                 className="bg-white w-full py-2 px-4
                   rounded-full text-black text-center mt-7 text-sm"
               >
-                See Profile
+                Ver perfil
               </Link>
             </div>
           </div>
@@ -72,7 +72,7 @@ function Menu({ userData, role }) {
             className="flex items-center uppercase w-full justify-center"
           >
             <BiStore className="text-lg" />
-            <p className="ml-2">Products</p>
+            <p className="ml-2">Produtos</p>
           </button>
         </li>
 
@@ -87,7 +87,12 @@ function Menu({ userData, role }) {
              w-full justify-center"
           >
             <BiShoppingBag className="text-lg" />
-            <p className="ml-2">{(role === 'seller') ? 'My sellers' : 'My orders'}</p>
+            <p className="ml-2">
+              {(role === 'seller')
+                ? 'Minhas vendas'
+                : 'Meus pedidos'}
+
+            </p>
           </button>
         </li>
 
@@ -96,13 +101,13 @@ function Menu({ userData, role }) {
           border-y-slate-400 w-full ${(role === 'administrator' ? 'block' : 'hidden')}` }
         >
           <button
-            // onClick={ () => handleNavigate() }
+            onClick={ () => navigate('/admin/manage') }
             type="button"
             className="flex items-center uppercase
              w-full justify-center"
           >
             <RiFileUserLine className="text-lg" />
-            <p className="ml-2">Users list</p>
+            <p className="ml-2">Usuários</p>
           </button>
         </li>
 
@@ -111,13 +116,13 @@ function Menu({ userData, role }) {
           border-y-slate-400 w-full ${(role === 'administrator' ? 'block' : 'hidden')}` }
         >
           <button
-            // onClick={ () => handleNavigate() }
+            onClick={ () => navigate('/admin/products') }
             type="button"
             className="flex items-center uppercase
              w-full justify-center"
           >
             <AiOutlineUserAdd className="text-lg" />
-            <p className="ml-2">Register user</p>
+            <p className="ml-2">Produtos</p>
           </button>
         </li>
 
@@ -130,7 +135,7 @@ function Menu({ userData, role }) {
             className="flex items-center uppercase w-full justify-center"
           >
             <CiLogin />
-            <p className="ml-2">Log Out</p>
+            <p className="ml-2">Sair</p>
           </button>
         </li>
       </ul>

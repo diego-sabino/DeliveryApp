@@ -69,7 +69,7 @@ export default function DrinkCard({ drink, handleClick }) {
                   duration-200 uppercase rounded-full bg-green-main
                 text-white border-2 text-xs border-green-main"
               >
-                Remove from cart
+                Remover do carrinho
               </button>
             </div>
           )
@@ -82,7 +82,7 @@ export default function DrinkCard({ drink, handleClick }) {
                     duration-200 uppercase rounded-full border-2 border-gray-700 text-xs
                     focus:outline-none"
                 >
-                  Add to cart
+                  Adicionar ao carrinho
                 </button>
               </div>)}
 

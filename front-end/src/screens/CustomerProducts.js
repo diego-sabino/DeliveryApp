@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar.jsx';
 import DrinkCard from '../components/DrinkCard';
 import { setItemLocalStorage } from '../utils/LocalStorageUtil';
 import Cart from '../components/Cart';
+import hero from '../images/hero3.png';
 
 const minusOne = -1;
 
@@ -98,17 +99,25 @@ export default function CustomerProducts() {
 
       <main className="px-4 py-2">
         <div className="w-full">
-          <p className="text-gray-400">Our products</p>
-          <p className="text-green-main text-2xl font-semibold">Special for you</p>
+          <p className="text-gray-400">Nossos produtos</p>
+          <p className="text-green-main text-2xl font-semibold">
+            Especialmente para você
+          </p>
           <input
             className="bg-slate-50 focus:outline-none focus:shadow-outline
               border border-gray-300 rounded py-2 px-4 block w-full
               appearance-none leading-normal mt-3"
             onChange={ handleSearch }
             type="text"
-            placeholder="Search for a product"
+            placeholder="Pesquise por um produto"
           />
         </div>
+
+        <img
+          src={ hero }
+          alt="Amigos bebendo"
+          className="w-full h-[150px] object-cover rounded-2xl mt-5"
+        />
 
         <div
           className="mt-6 w-full flex flex-wrap justify-center gap-6"

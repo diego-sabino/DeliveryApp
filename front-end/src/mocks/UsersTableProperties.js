@@ -1,9 +1,9 @@
 const usersProperties = [
   'Item',
-  'Name',
+  'Nome',
   'Email',
-  'Role',
-  'Remove',
+  'Função',
+  'Remover',
 ];
 
 export default usersProperties;
