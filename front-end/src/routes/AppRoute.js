@@ -26,7 +26,6 @@ function AppRoute() {
           <Route path="/login" element={ <Login /> } exact />
           <Route path="/register" element={ <Register /> } exact />
           <Route path="/seller/orders" element={ <SellerOrders /> } exact />
-          <Route path="/sacola" element={ <Cart /> } exact />
           <Route path="/seller/orders/:id" element={ <SaleDetails /> } exact />
         </Routes>
       </AppProvider>

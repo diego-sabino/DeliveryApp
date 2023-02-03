@@ -7,7 +7,7 @@ export default function ProgressBar({ orderStatus }) {
   const orderDelivered = orderStatus === 'Entregue';
 
   return (
-    <div className="max-w-xl mx-auto my-4 border-b-2 pb-4">
+    <div className="max-w-xl  mx-auto my-4 shadow-md  rounded-lg pb-4">
       <div className="flex pb-3">
         <div className="flex-1" />
 
@@ -16,7 +16,22 @@ export default function ProgressBar({ orderStatus }) {
             className="w-10 h-10 bg-white border-2
            border-grey-light mx-auto rounded-full text-lg text-white flex items-center"
           >
-            <span className="text-black text-center w-full">1</span>
+            <div className="wrapper -ml-2">
+              <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle
+                  className="checkmark__circle"
+                  cx="26"
+                  cy="26"
+                  r="25"
+                  fill="none"
+                />
+                <path
+                  className="checkmark__check"
+                  fill="none"
+                  d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -36,9 +51,31 @@ export default function ProgressBar({ orderStatus }) {
         <div className="flex-1">
           <div
             className="w-10 h-10 bg-white border-2
-           border-grey-light mx-auto rounded-full text-lg text-white flex items-center"
+            border-grey-light mx-auto rounded-full text-lg text-white flex items-center"
           >
-            <span className="text-black text-center w-full">2</span>
+            {(orderInPreparation || orderDelivered || orderOnTheWay)
+              ? (
+                <div className="wrapper -ml-2">
+                  <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    {' '}
+                    <circle
+                      className="checkmark__circle"
+                      cx="26"
+                      cy="26"
+                      r="25"
+                      fill="none"
+                    />
+                    {' '}
+                    <path
+                      className="checkmark__check"
+                      fill="none"
+                      d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                    />
+                  </svg>
+                </div>
+              )
+              : <span className="text-black text-center w-full">2</span>}
+
           </div>
         </div>
 
@@ -61,7 +98,28 @@ export default function ProgressBar({ orderStatus }) {
             className="w-10 h-10 bg-white border-2
            border-grey-light mx-auto rounded-full text-lg text-white flex items-center"
           >
-            <span className="text-black text-center w-full">3</span>
+            {(orderDelivered || orderOnTheWay)
+              ? (
+                <div className="wrapper -ml-2">
+                  <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    {' '}
+                    <circle
+                      className="checkmark__circle"
+                      cx="26"
+                      cy="26"
+                      r="25"
+                      fill="none"
+                    />
+                    {' '}
+                    <path
+                      className="checkmark__check"
+                      fill="none"
+                      d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                    />
+                  </svg>
+                </div>
+              )
+              : <span className="text-black text-center w-full">3</span>}
           </div>
         </div>
 
@@ -73,7 +131,7 @@ export default function ProgressBar({ orderStatus }) {
             <div
               className="bg-green-500 text-xs leading-none
              py-1 text-center text-grey-darkest rounded "
-              style={ (orderDelivered)
+              style={ (orderDelivered || orderOnTheWay)
                 ? { width: '100%' } : { width: '0%' } }
             />
           </div>
@@ -85,7 +143,28 @@ export default function ProgressBar({ orderStatus }) {
            border-2 border-grey-light mx-auto rounded-full
            text-lg text-white flex items-center"
           >
-            <span className="text-black text-center w-full">4</span>
+            {(orderDelivered)
+              ? (
+                <div className="wrapper -ml-2">
+                  <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    {' '}
+                    <circle
+                      className="checkmark__circle"
+                      cx="26"
+                      cy="26"
+                      r="25"
+                      fill="none"
+                    />
+                    {' '}
+                    <path
+                      className="checkmark__check"
+                      fill="none"
+                      d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                    />
+                  </svg>
+                </div>
+              )
+              : <span className="text-black text-center w-full">4</span>}
           </div>
         </div>
 
