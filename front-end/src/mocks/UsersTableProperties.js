@@ -1,4 +1,4 @@
-const usersProperties = [
+export const usersProperties = [
   'Item',
   'Nome',
   'Email',
@@ -6,4 +6,9 @@ const usersProperties = [
   'Remover',
 ];
 
-export default usersProperties;
+export const productsProperties = [
+  'Item',
+  'Nome',
+  'Image',
+  'Remover',
+];

@@ -23,7 +23,7 @@ export default function SaleCard({ sale, url }) {
     <button
       type="button"
       onClick={ handleNavigate }
-      className="flex gap-2 bg-[#EAF1EF] p-2"
+      className="flex gap-2 bg-[#EAF1EF] p-2 rounded-xl"
       data-testid={ (url === 'customer')
         ? `customer_orders__element-order-id-${sale.id}`
         : `seller_orders__element-order-id-${sale.id}` }

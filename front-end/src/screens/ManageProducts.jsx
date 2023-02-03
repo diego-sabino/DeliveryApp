@@ -2,9 +2,10 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 
 import NavbarAdm from '../components/NavbarAdm';
-import NewUserForm from '../components/NewUserForm';
-import UsersTable from '../components/UsersTable';
+import NewProductForm from '../components/NewProductForm';
+import ProductsTable from '../components/ProductsTable';
 import AppContext from '../context/AppContext';
+import { getItemLocalStorage } from '../utils/LocalStorageUtil';
 
 export default function ManageProducts() {
   const { toggle, setToggle } = useContext(AppContext);
@@ -20,18 +21,18 @@ export default function ManageProducts() {
       });
   }, [toggle]);
 
-//   const removeProduct = (userId) => {
-//     const user = getItemLocalStorage('user');
-//     axios.delete(`http://localhost:3001/user/${userId}`, {
-//       headers: { Authorization: user.token },
-//     })
-//       .then((response) => {
-//         console.log(response);
-//         setToggle(!toggle);
-//       }).catch((error) => {
-//         console.log(error);
-//       });
-//   };
+  const removeProduct = (productId) => {
+    const user = getItemLocalStorage('user');
+    axios.delete(`http://localhost:3001/admin/products/${productId}`, {
+      headers: { Authorization: user.token },
+    })
+      .then((response) => {
+        console.log(response);
+        setToggle(!toggle);
+      }).catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -44,7 +45,7 @@ export default function ManageProducts() {
            ${(component === 0) ? 'bg-green-main text-white' : 'bg-gray-300'}` }
           onClick={ () => setComponenet(0) }
         >
-          Usuários
+          Produtos
 
         </button>
 
@@ -54,7 +55,7 @@ export default function ManageProducts() {
           ${(component === 1) ? 'bg-green-main text-white' : 'bg-gray-300'}` }
           onClick={ () => setComponenet(1) }
         >
-          Registrar usuário
+          Registrar produto
 
         </button>
       </div>
@@ -64,13 +65,16 @@ export default function ManageProducts() {
           (component === 0)
             ? (
               <section>
-                <p className="py-2 text-xl font-bold">Users List</p>
-                <UsersTable users={ usersList } removeUser={ removeUser } />
+                <p className="py-2 text-xl font-bold">Lista de produtos</p>
+                <ProductsTable
+                  products={ productsList }
+                  removeProduct={ removeProduct }
+                />
               </section>)
             : (
               <section>
-                <p className="py-2 text-xl font-bold">Registrar novo usuárior</p>
-                <NewUserForm />
+                <p className="py-2 text-xl font-bold">Registrar novo produto</p>
+                <NewProductForm />
               </section>
             )
         }
@@ -78,4 +82,3 @@ export default function ManageProducts() {
     </div>
   );
 }
-

@@ -29,7 +29,7 @@ export default function SellerOrders() {
     <div>
       <Navbar />
 
-      <main className="flex gap-4 flex-wrap p-6">
+      <main className="flex gap-4 flex-wrap py-2 justify-center">
         { (ordersList.length > 0)
           ? ordersList.map((sale, index) => (
             <SaleCard

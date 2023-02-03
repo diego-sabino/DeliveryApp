@@ -1,15 +1,15 @@
 /* eslint-disable react/jsx-max-depth */
 import PropTypes from 'prop-types';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { usersProperties } from '../mocks/UsersTableProperties';
+import { productsProperties } from '../mocks/UsersTableProperties';
 
-export default function UsersTable({ users, removeUser }) {
+export default function ProductsTable({ products, removeProduct }) {
   return (
     <div className="rounded-lg overflow-x-auto">
       <table className="w-full">
         <thead>
           <tr>
-            { usersProperties.map((item, index) => (
+            { productsProperties.map((item, index) => (
               <th
                 key={ index }
                 className="text-sm
@@ -22,7 +22,7 @@ export default function UsersTable({ users, removeUser }) {
           </tr>
         </thead>
         <tbody>
-          {(users) && users.map((user, index) => (
+          {(products) && products.map((product, index) => (
             <tr key={ index } className="bg-white border-b text-center">
               <td
                 className="px-6 py-4 whitespace-nowrap
@@ -41,27 +41,14 @@ export default function UsersTable({ users, removeUser }) {
                   `admin_manage__element-user-table-name-${index}`
                 }
               >
-                {user.name}
+                {product.name}
               </td>
 
               <td
-                className="text-sm text-gray-900 font-light
-                        px-6 py-4 whitespace-nowrap"
-                data-testid={
-                  `admin_manage__element-user-table-email-${index}`
-                }
+                className="px-6 py-4 whitespace-nowrap
+                    text-sm font-medium text-gray-900"
               >
-                {user.email}
-              </td>
-
-              <td
-                className="text-sm text-gray-900 font-light
-                        px-6 py-4 whitespace-nowrap"
-                data-testid={
-                  `admin_manage__element-user-table-role-${index}`
-                }
-              >
-                {user.role}
+                <img src={ product.url_image } alt="Imagem do produto" />
               </td>
 
               <td
@@ -70,7 +57,7 @@ export default function UsersTable({ users, removeUser }) {
               >
                 <button
                   type="button"
-                  onClick={ () => removeUser(user.id) }
+                  onClick={ () => removeProduct(product.id) }
                   data-testid={
                     `admin_manage__element-user-table-remove-${index}`
                   }
@@ -89,12 +76,9 @@ export default function UsersTable({ users, removeUser }) {
   );
 }
 
-UsersTable.propTypes = {
-  users: PropTypes.arrayOf(PropTypes.shape({
+ProductsTable.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    id: PropTypes.number,
-    email: PropTypes.string,
-    role: PropTypes.string,
   })).isRequired,
-  removeUser: PropTypes.func.isRequired,
+  removeProduct: PropTypes.func.isRequired,
 };

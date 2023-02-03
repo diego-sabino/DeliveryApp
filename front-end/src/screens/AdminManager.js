@@ -67,7 +67,7 @@ export default function AdminManager() {
           (component === 0)
             ? (
               <section>
-                <p className="py-2 text-xl font-bold">Users List</p>
+                <p className="py-2 text-xl font-bold">Lista de usuários</p>
                 <UsersTable users={ usersList } removeUser={ removeUser } />
               </section>)
             : (

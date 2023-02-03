@@ -29,8 +29,9 @@ function Menu({ userData, role }) {
   const handleNavigate = () => {
     if (role === 'seller') {
       navigate('/seller/orders');
+    } else {
+      navigate('/customer/orders');
     }
-    navigate('/customer/orders');
   };
 
   return (
