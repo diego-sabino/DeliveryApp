@@ -1,4 +1,4 @@
-# Plataforma de Delivery
+# DeliveryApp
 Este é um projeto de desenvolvimento de um app de delivery para uma distribuidora de cervejas. A plataforma permite que os clientes façam pedidos de produtos e as pessoas vendedoras aprovem, preparem e enviem esses pedidos. A pessoa administradora pode gerenciar quem usa o aplicativo e ter acesso a todas as funções.
 
 ## Instalação
